@@ -1,8 +1,8 @@
 package com.easycoding.todou.repository
 
-import com.easycoding.todou.data.dao.CategoryDao
-import com.easycoding.todou.data.dao.CategoryWithTodosDao
-import com.easycoding.todou.data.dao.TodoDao
+import com.easycoding.todou.data.database.dao.CategoryDao
+import com.easycoding.todou.data.database.dao.CategoryWithTodosDao
+import com.easycoding.todou.data.database.dao.TodoDao
 import com.easycoding.todou.model.Category
 import com.easycoding.todou.model.Todo
 import com.easycoding.todou.model.toEntity

@@ -1,8 +1,8 @@
-package com.easycoding.todou.data.dao
+package com.easycoding.todou.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.easycoding.todou.data.entities.TodoEntity
+import com.easycoding.todou.data.database.entities.TodoEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

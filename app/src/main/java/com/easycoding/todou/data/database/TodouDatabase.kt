@@ -1,13 +1,13 @@
-package com.easycoding.todou.data
+package com.easycoding.todou.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.easycoding.todou.data.dao.CategoryDao
-import com.easycoding.todou.data.dao.CategoryWithTodosDao
-import com.easycoding.todou.data.dao.TodoDao
-import com.easycoding.todou.data.entities.CategoryEntity
-import com.easycoding.todou.data.entities.CategoryWithTodosEntity
-import com.easycoding.todou.data.entities.TodoEntity
+import com.easycoding.todou.data.database.dao.CategoryDao
+import com.easycoding.todou.data.database.dao.CategoryWithTodosDao
+import com.easycoding.todou.data.database.dao.TodoDao
+import com.easycoding.todou.data.database.entities.CategoryEntity
+import com.easycoding.todou.data.database.entities.CategoryWithTodosEntity
+import com.easycoding.todou.data.database.entities.TodoEntity
 
 const val TODOU_DATABASE_NAME = "todou_database"
 

@@ -1,6 +1,6 @@
 package com.easycoding.todou.model
 
-import com.easycoding.todou.data.entities.CategoryEntity
+import com.easycoding.todou.data.database.entities.CategoryEntity
 
 data class Category(
     val id: Int,

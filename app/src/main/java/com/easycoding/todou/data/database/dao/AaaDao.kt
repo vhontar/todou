@@ -1,4 +1,4 @@
-package com.easycoding.todou.data.dao
+package com.easycoding.todou.data.database.dao
 
 import androidx.room.Delete
 import androidx.room.Insert

@@ -1,4 +1,4 @@
-package com.easycoding.todou.data.entities
+package com.easycoding.todou.data.database.entities
 
 import androidx.room.Embedded
 import androidx.room.Relation

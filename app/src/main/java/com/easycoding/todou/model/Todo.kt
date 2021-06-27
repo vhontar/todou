@@ -1,6 +1,6 @@
 package com.easycoding.todou.model
 
-import com.easycoding.todou.data.entities.TodoEntity
+import com.easycoding.todou.data.database.entities.TodoEntity
 
 data class Todo(
     val id: Int,
