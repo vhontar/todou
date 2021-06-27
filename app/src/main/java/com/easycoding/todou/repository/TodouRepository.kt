@@ -16,7 +16,7 @@ class TodouRepository @Inject constructor(
     private val categoryWithTodosDao: CategoryWithTodosDao
 ) {
     // get category with todos
-    fun getCategoryWithTodos() = categoryWithTodosDao.getCategoriesWithTodos()
+    fun getCategoriesWithTodos() = categoryWithTodosDao.getCategoriesWithTodos()
 
     // CRUD category
     fun createCategory(category: Category) = categoryDao.insert(category.toEntity())
