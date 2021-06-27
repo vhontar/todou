@@ -1,4 +1,4 @@
-package com.easycoding.todou.ui.tasks
+package com.easycoding.todou.ui.todos
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -11,4 +11,6 @@ class TodosViewModel @Inject constructor(
     private val todouRepository: TodouRepository,
     stateHandle: SavedStateHandle
 ) : ViewModel() {
+
+
 }

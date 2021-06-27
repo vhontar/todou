@@ -1,4 +1,4 @@
-package com.easycoding.todou.ui.tasks
+package com.easycoding.todou.ui.todos
 
 import android.os.Bundle
 import android.view.View

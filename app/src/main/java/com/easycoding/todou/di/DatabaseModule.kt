@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.easycoding.todou.data.TODOU_DATABASE_NAME
-import com.easycoding.todou.data.TodouDatabase
-import com.easycoding.todou.model.Todo
+import com.easycoding.todou.data.database.TODOU_DATABASE_NAME
+import com.easycoding.todou.data.database.TodouDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
