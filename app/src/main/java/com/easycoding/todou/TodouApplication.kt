@@ -1,6 +1,7 @@
 package com.easycoding.todou
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class TodouApplication: Application() {
-}
+@HiltAndroidApp
+class TodouApplication: Application()
