@@ -21,8 +21,7 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideTodouDatabase(@ApplicationContext context: Context): TodouDatabase =
-        Room
-            .databaseBuilder(context, TodouDatabase::class.java, TODOU_DATABASE_NAME)
+        Room.databaseBuilder(context, TodouDatabase::class.java, TODOU_DATABASE_NAME)
             .addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
