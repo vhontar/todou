@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.paging.PagingData
 import com.easycoding.todou.R
 import com.easycoding.todou.databinding.FragmentTodouBinding
+import com.easycoding.todou.model.Todo
 import com.easycoding.todou.ui.adapter.CategoryListener
 import com.easycoding.todou.ui.adapter.CategoryWithTodosAdapter
 import com.easycoding.todou.ui.adapter.TodoListener
@@ -32,18 +33,9 @@ class TodouFragment: Fragment(R.layout.fragment_todou), CategoryListener, TodoLi
         viewModel.categoriesWithTodos.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-
     }
 
-    override fun categoryItemClicked() {
-        // TODO
-    }
-
-    override fun todoItemClicked() {
-        // TODO
-    }
-
-    override fun todoItemDoneClicked(isDone: Boolean) {
-        // TODO
-    }
+    override fun onCategoryItemClicked() = viewModel.onCategoryItemClicked()
+    override fun onTodoItemClicked() = viewModel.onTodoItemClicked()
+    override fun onTodoItemDoneClicked(todo: Todo) = viewModel.onTodoItemDoneClicked(todo)
 }

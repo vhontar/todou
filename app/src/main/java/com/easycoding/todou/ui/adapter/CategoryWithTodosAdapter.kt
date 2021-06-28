@@ -48,7 +48,7 @@ class CategoryWithTodosViewHolder private constructor(
     private var todoListener: TodoListener? = null
 
     init {
-        binding.tvCategoryNameWithTodos.setOnClickListener { categoryListener?.categoryItemClicked() }
+        binding.tvCategoryNameWithTodos.setOnClickListener { categoryListener?.onCategoryItemClicked() }
     }
 
     fun bind(categoryWithTodos: CategoryWithTodos) {
@@ -89,7 +89,7 @@ class CategoryWithoutTodosViewHolder private constructor(
     private var categoryListener: CategoryListener? = null
 
     init {
-        binding.tvCategoryTitle.setOnClickListener { categoryListener?.categoryItemClicked() }
+        binding.tvCategoryTitle.setOnClickListener { categoryListener?.onCategoryItemClicked() }
     }
 
     fun bind(category: Category) {
@@ -109,7 +109,7 @@ class CategoryWithoutTodosViewHolder private constructor(
 }
 
 interface CategoryListener {
-    fun categoryItemClicked()
+    fun onCategoryItemClicked()
 }
 
 class CategoryDiffUtilCallback : DiffUtil.ItemCallback<CategoryWithTodos>() {

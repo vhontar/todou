@@ -2,7 +2,6 @@ package com.easycoding.todou.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -29,20 +28,20 @@ class TodoViewHolder private constructor(
     private var listener: TodoListener? = null
 
     init {
-        binding.rlTodoRoot.setOnClickListener { listener?.todoItemClicked() }
-        // rethink the solution of changing image and sending the event to listener
-        binding.ivTodoDone.setOnClickListener {
-            val isDone = binding.todo?.isDone ?: false
-            listener?.todoItemDoneClicked(isDone)
-            binding.todo = binding.todo?.copy(isDone = !isDone)
-            binding.executePendingBindings()
-        }
+        binding.rlTodoRoot.setOnClickListener { listener?.onTodoItemClicked() }
     }
 
     fun bind(todo: Todo, category: Category) {
         binding.todo = todo
         binding.category = category
         binding.executePendingBindings()
+
+        binding.apply {
+            ivTodoDone.setOnClickListener {
+                val updatedTodo = todo.copy(isDone = !todo.isDone)
+                listener?.onTodoItemDoneClicked(updatedTodo)
+            }
+        }
     }
 
     companion object {
@@ -57,8 +56,8 @@ class TodoViewHolder private constructor(
 }
 
 interface TodoListener {
-    fun todoItemClicked()
-    fun todoItemDoneClicked(isDone: Boolean)
+    fun onTodoItemClicked()
+    fun onTodoItemDoneClicked(todo: Todo)
 }
 
 class TodoDiffUtilCallBack : DiffUtil.ItemCallback<Todo>() {
