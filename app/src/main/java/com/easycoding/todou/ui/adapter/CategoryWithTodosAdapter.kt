@@ -107,6 +107,9 @@ class CategoryWithoutTodosViewHolder private constructor(
         binding.tvCategoryTitle.setOnClickListener {
             localCategory?.let { categoryListener?.onCategoryItemClicked(it) }
         }
+        binding.root.setOnClickListener {
+            localCategory?.let { categoryListener?.onCategoryWithAllTodosClicked(it) }
+        }
     }
 
     fun bind(category: Category) {
@@ -130,6 +133,7 @@ class CategoryWithoutTodosViewHolder private constructor(
 
 interface OnCategoryClickListener {
     fun onCategoryItemClicked(category: Category)
+    fun onCategoryWithAllTodosClicked(category: Category)
 }
 
 class CategoryDiffUtilCallback : DiffUtil.ItemCallback<CategoryWithTodos>() {

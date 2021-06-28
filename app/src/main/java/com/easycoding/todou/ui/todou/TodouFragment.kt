@@ -5,6 +5,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.easycoding.todou.R
 import com.easycoding.todou.databinding.FragmentTodouBinding
 import com.easycoding.todou.model.Category
@@ -39,17 +41,27 @@ class TodouFragment: Fragment(R.layout.fragment_todou), OnCategoryClickListener,
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            when(viewModel.todouEvents.first()) {
+            val event = viewModel.todouEvents.first()
+            when(event) {
+                is TodouViewModel.TodouEvents.NavigateToCategoryWithAllTodosPage -> {
+                    val action = TodouFragmentDirections.actionTodouFragmentToTodosFragment(event.category)
+                    findNavController().navigate(action)
+                }
                 is TodouViewModel.TodouEvents.NavigateToCategoryPage -> {
-
+                    val action = TodouFragmentDirections.actionTodouFragmentToCategoryFragment(event.category)
+                    findNavController().navigate(action)
                 }
                 is TodouViewModel.TodouEvents.NavigateToTodoPage -> {
-
+                    val action = TodouFragmentDirections.actionTodouFragmentToTodoFragment(event.todo)
+                    findNavController().navigate(action)
                 }
             }.exclusive
         }
     }
 
+    override fun onCategoryWithAllTodosClicked(category: Category) {
+        viewModel.onCategoryWithAllTodosClicked(category)
+    }
     override fun onCategoryItemClicked(category: Category) {
         viewModel.onCategoryItemClicked(category)
     }

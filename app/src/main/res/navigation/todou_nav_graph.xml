@@ -7,14 +7,32 @@
     <fragment android:id="@+id/todosFragment"
               android:name="com.easycoding.todou.ui.todos.TodosFragment"
               android:label="TodosFragment"
-              tools:layout="@layout/fragment_todos"/>
+              tools:layout="@layout/fragment_todos">
+        <action android:id="@+id/action_todosFragment_to_todoFragment" app:destination="@id/todoFragment"/>
+        <argument android:name="category" app:argType="com.easycoding.todou.model.Category" app:nullable="true"
+                  android:defaultValue="@null"/>
+    </fragment>
     <fragment android:id="@+id/todouFragment"
               android:name="com.easycoding.todou.ui.todou.TodouFragment"
               android:label="TodouFragment"
               tools:layout="@layout/fragment_todou">
-        <action android:id="@+id/openTodosForCategory" app:destination="@id/todosFragment"
-                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <argument android:name="categoryId" app:argType="integer"/>
+        <action android:id="@+id/action_todouFragment_to_todoFragment" app:destination="@id/todoFragment"/>
+        <action android:id="@+id/action_todouFragment_to_categoryFragment" app:destination="@id/categoryFragment"/>
+        <action android:id="@+id/action_todouFragment_to_todosFragment" app:destination="@id/todosFragment"/>
+    </fragment>
+    <fragment android:id="@+id/todoFragment"
+              android:name="com.easycoding.todou.ui.todo.TodoFragment"
+              android:label="TodoFragment"
+              tools:layout="@layout/fragment_todo">
+        <argument android:name="todo" app:argType="com.easycoding.todou.model.Todo" app:nullable="true"
+                  android:defaultValue="@null"/>
+    </fragment>
+    <fragment android:id="@+id/categoryFragment"
+              android:name="com.easycoding.todou.ui.category.CategoryFragment"
+              android:label="CategoryFragment"
+              tools:layout="@layout/fragment_category">
+        <argument android:name="category" app:argType="com.easycoding.todou.model.Category" app:nullable="true"
+                  android:defaultValue="@null"/>
     </fragment>
 </navigation>
