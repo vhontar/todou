@@ -12,4 +12,8 @@ interface CategoryWithTodosDao: AaaDao<CategoryWithTodosEntity> {
     @Transaction
     @Query("SELECT * FROM categories")
     fun getCategoriesWithTodos(): Flow<List<CategoryWithTodosEntity>>
+
+    @Transaction
+    @Query("SELECT * FROM categories INNER JOIN todos WHERE name = :searchQuery")
+    fun getCategoriesWithTodosBySearchQuery(searchQuery: String): Flow<List<CategoryWithTodosEntity>>
 }

@@ -2,10 +2,11 @@ package com.easycoding.todou.data.database.dao
 
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Update
 
 interface AaaDao<Entity> {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(entity: Entity): Long
 
     @Delete

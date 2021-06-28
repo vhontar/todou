@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.easycoding.todou.databinding.RecyclerviewCategoryItemBinding
 import com.easycoding.todou.model.CategoryWithTodos
 
-class CategoryWithTodosAdapter: PagingDataAdapter<CategoryWithTodos, CategoryViewHolder>(CategoryDiffUtilCallback()) {
+class CategoryWithTodosAdapter : PagingDataAdapter<CategoryWithTodos, CategoryViewHolder>(CategoryDiffUtilCallback()) {
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
@@ -18,7 +18,9 @@ class CategoryWithTodosAdapter: PagingDataAdapter<CategoryWithTodos, CategoryVie
     }
 }
 
-class CategoryViewHolder(private val binding: RecyclerviewCategoryItemBinding): RecyclerView.ViewHolder(binding.root) {
+class CategoryViewHolder(
+    private val binding: RecyclerviewCategoryItemBinding
+) : RecyclerView.ViewHolder(binding.root) {
     init {
 
     }
@@ -42,7 +44,7 @@ class CategoryViewHolder(private val binding: RecyclerviewCategoryItemBinding): 
     }
 }
 
-class CategoryDiffUtilCallback: DiffUtil.ItemCallback<CategoryWithTodos>() {
+class CategoryDiffUtilCallback : DiffUtil.ItemCallback<CategoryWithTodos>() {
     override fun areItemsTheSame(oldItem: CategoryWithTodos, newItem: CategoryWithTodos): Boolean {
         return oldItem == newItem
     }
