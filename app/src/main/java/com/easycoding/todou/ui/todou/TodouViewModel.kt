@@ -2,9 +2,14 @@ package com.easycoding.todou.ui.todou
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.easycoding.todou.model.Category
 import com.easycoding.todou.model.Todo
 import com.easycoding.todou.repository.TodouRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,15 +19,23 @@ class TodouViewModel @Inject constructor(
 
     val categoriesWithTodos = todouRepository.getCategoriesWithTodos().asLiveData()
 
-    fun onCategoryItemClicked() {
+    private val todouEventsChannel = Channel<TodouEvents>()
+    val todouEvents = todouEventsChannel.receiveAsFlow()
 
+    fun onCategoryItemClicked(category: Category) = viewModelScope.launch {
+        todouEventsChannel.send(TodouEvents.NavigateToCategoryPage(category))
     }
 
-    fun onTodoItemClicked() {
-
+    fun onTodoItemClicked(todo: Todo) = viewModelScope.launch {
+        todouEventsChannel.send(TodouEvents.NavigateToTodoPage(todo))
     }
 
-    fun onTodoItemDoneClicked(todo: Todo) {
+    fun onTodoItemDoneClicked(todo: Todo) = viewModelScope.launch {
         todouRepository.updateTodo(todo)
+    }
+
+    sealed class TodouEvents() {
+        class NavigateToCategoryPage(category: Category): TodouEvents()
+        class NavigateToTodoPage(todo: Todo): TodouEvents()
     }
 }

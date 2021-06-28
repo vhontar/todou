@@ -7,11 +7,11 @@ import androidx.room.Update
 
 interface AaaDao<Entity> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(entity: Entity): Long
+    suspend fun insert(entity: Entity): Long
 
     @Delete
-    fun delete(entity: Entity): Long
+    suspend fun delete(entity: Entity): Long
 
     @Update
-    fun update(entity: Entity): Long
+    suspend fun update(entity: Entity): Long
 }

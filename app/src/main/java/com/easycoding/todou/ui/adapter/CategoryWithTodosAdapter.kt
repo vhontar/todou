@@ -11,8 +11,8 @@ import com.easycoding.todou.model.Category
 import com.easycoding.todou.model.CategoryWithTodos
 
 class CategoryWithTodosAdapter(
-    private val categoryListener: CategoryListener,
-    private val todoListener: TodoListener
+    private val categoryListener: OnCategoryClickListener,
+    private val todoListener: OnTodoClickListener
 ) : ListAdapter<CategoryWithTodos, RecyclerView.ViewHolder>(CategoryDiffUtilCallback()) {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
@@ -44,14 +44,24 @@ class CategoryWithTodosViewHolder private constructor(
     private val binding: RecyclerviewCategoryWithTodosItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var categoryListener: CategoryListener? = null
-    private var todoListener: TodoListener? = null
+    private var categoryListener: OnCategoryClickListener? = null
+    private var todoListener: OnTodoClickListener? = null
+    private var localCategory: Category? = null
 
     init {
-        binding.tvCategoryNameWithTodos.setOnClickListener { categoryListener?.onCategoryItemClicked() }
+        /**
+         * It's cheaper to subscribe to listeners only for created view holders and reuse them when new
+         * data binding to the created view holder
+         * */
+        binding.tvCategoryNameWithTodos.setOnClickListener {
+            localCategory?.let { categoryListener?.onCategoryItemClicked(it) }
+        }
     }
 
     fun bind(categoryWithTodos: CategoryWithTodos) {
+        // set up local variable for listeners
+        localCategory = categoryWithTodos.category
+
         binding.apply {
             category = categoryWithTodos.category
 
@@ -69,8 +79,8 @@ class CategoryWithTodosViewHolder private constructor(
     companion object {
         fun from(
             parent: ViewGroup,
-            categoryListener: CategoryListener,
-            todoListener: TodoListener
+            categoryListener: OnCategoryClickListener,
+            todoListener: OnTodoClickListener
         ): CategoryWithTodosViewHolder {
             val inflater = LayoutInflater.from(parent.context)
             val binding = RecyclerviewCategoryWithTodosItemBinding.inflate(inflater, parent, false)
@@ -86,19 +96,29 @@ class CategoryWithoutTodosViewHolder private constructor(
     private val binding: RecyclerviewCategoryWithoutTodosItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var categoryListener: CategoryListener? = null
+    private var categoryListener: OnCategoryClickListener? = null
+    private var localCategory: Category? = null
 
     init {
-        binding.tvCategoryTitle.setOnClickListener { categoryListener?.onCategoryItemClicked() }
+        /**
+         * It's cheaper to subscribe to listeners only for created view holders and reuse them when new
+         * data binding to the created view holder
+         * */
+        binding.tvCategoryTitle.setOnClickListener {
+            localCategory?.let { categoryListener?.onCategoryItemClicked(it) }
+        }
     }
 
     fun bind(category: Category) {
+        // set local variable for listeners
+        localCategory = category
+
         binding.category = category
         binding.executePendingBindings()
     }
 
     companion object {
-        fun from(parent: ViewGroup, categoryListener: CategoryListener): CategoryWithoutTodosViewHolder {
+        fun from(parent: ViewGroup, categoryListener: OnCategoryClickListener): CategoryWithoutTodosViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = RecyclerviewCategoryWithoutTodosItemBinding.inflate(layoutInflater, parent, false)
             val viewHolder = CategoryWithoutTodosViewHolder(binding)
@@ -108,8 +128,8 @@ class CategoryWithoutTodosViewHolder private constructor(
     }
 }
 
-interface CategoryListener {
-    fun onCategoryItemClicked()
+interface OnCategoryClickListener {
+    fun onCategoryItemClicked(category: Category)
 }
 
 class CategoryDiffUtilCallback : DiffUtil.ItemCallback<CategoryWithTodos>() {

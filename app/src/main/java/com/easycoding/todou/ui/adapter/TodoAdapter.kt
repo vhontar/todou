@@ -11,7 +11,7 @@ import com.easycoding.todou.model.Todo
 
 class TodoAdapter(
     private val category: Category,
-    private val listener: TodoListener? = null
+    private val listener: OnTodoClickListener? = null
 ) : ListAdapter<Todo, TodoViewHolder>(TodoDiffUtilCallBack()) {
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it, category) }
@@ -25,27 +25,36 @@ class TodoViewHolder private constructor(
     private val binding: RecyclerviewTodoItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var listener: TodoListener? = null
+    private var listener: OnTodoClickListener? = null
+    private var localTodo: Todo? = null
 
     init {
-        binding.rlTodoRoot.setOnClickListener { listener?.onTodoItemClicked() }
-    }
-
-    fun bind(todo: Todo, category: Category) {
-        binding.todo = todo
-        binding.category = category
-        binding.executePendingBindings()
-
-        binding.apply {
-            ivTodoDone.setOnClickListener {
-                val updatedTodo = todo.copy(isDone = !todo.isDone)
+        /**
+         * It's cheaper to subscribe to listeners only for created view holders and reuse them when new
+         * data binding to the created view holder
+         * */
+        binding.rlTodoRoot.setOnClickListener {
+            localTodo?.let { listener?.onTodoItemClicked(it) }
+        }
+        binding.ivTodoDone.setOnClickListener {
+            localTodo?.let {
+                val updatedTodo = it.copy(isDone = !it.isDone)
                 listener?.onTodoItemDoneClicked(updatedTodo)
             }
         }
     }
 
+    fun bind(todo: Todo, category: Category) {
+        // set for listener
+        localTodo = todo
+
+        binding.todo = todo
+        binding.category = category
+        binding.executePendingBindings()
+    }
+
     companion object {
-        fun from(parent: ViewGroup, listener: TodoListener?): TodoViewHolder {
+        fun from(parent: ViewGroup, listener: OnTodoClickListener?): TodoViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = RecyclerviewTodoItemBinding.inflate(layoutInflater, parent, false)
             val viewHolder = TodoViewHolder(binding)
@@ -55,8 +64,8 @@ class TodoViewHolder private constructor(
     }
 }
 
-interface TodoListener {
-    fun onTodoItemClicked()
+interface OnTodoClickListener {
+    fun onTodoItemClicked(todo: Todo)
     fun onTodoItemDoneClicked(todo: Todo)
 }
 

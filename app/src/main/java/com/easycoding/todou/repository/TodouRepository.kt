@@ -21,15 +21,15 @@ class TodouRepository @Inject constructor(
     fun getCategoriesWithTodos() = categoryWithTodosDao.getCategoriesWithTodos().map { it.toModels() }
 
     // CRUD category
-    fun createCategory(category: Category) = categoryDao.insert(category.toEntity())
+    suspend fun createCategory(category: Category) = categoryDao.insert(category.toEntity())
     fun getCategories() = categoryDao.getCategories()
-    fun updateCategory(category: Category) = categoryDao.update(category.toEntity())
-    fun deleteCategory(category: Category) = categoryDao.delete(category.toEntity())
+    suspend fun updateCategory(category: Category) = categoryDao.update(category.toEntity())
+    suspend fun deleteCategory(category: Category) = categoryDao.delete(category.toEntity())
 
     // CRUD todos
-    fun createTodo(todo: Todo, category: Category) =
+    suspend fun createTodo(todo: Todo, category: Category) =
         todoDao.insert(todo.copy(categoryId = category.id).toEntity())
     fun getTodosForCategory(category: Category) = todoDao.getTodosForCategory(category.id)
-    fun updateTodo(todo: Todo) = todoDao.update(todo.toEntity())
-    fun deleteTodo(todo: Todo) = todoDao.delete(todo.toEntity())
+    suspend fun updateTodo(todo: Todo) = todoDao.update(todo.toEntity())
+    suspend fun deleteTodo(todo: Todo) = todoDao.delete(todo.toEntity())
 }
