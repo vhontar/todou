@@ -6,10 +6,10 @@
         <import type="androidx.core.content.ContextCompat"/>
         <variable
                 name="category"
-                type="com.easycoding.todou.model.Category"/>
+                type="com.easycodingstudio.todou.model.Category"/>
         <variable
                 name="todo"
-                type="com.easycoding.todou.model.Todo"/>
+                type="com.easycodingstudio.todou.model.Todo"/>
     </data>
     <RelativeLayout
             android:id="@+id/rlTodoRoot"
@@ -27,14 +27,14 @@
                 android:layout_marginEnd="@dimen/default_margin"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/ivTodoDone"
-                app:strike="@{todo.done}"
+                app:strike="@{todo.completed}"
                 tools:text="Build the todo app" />
 
         <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivTodoDone"
                 style="@style/TodoDoneImageView"
                 android:layout_alignParentEnd="true"
-                android:src="@{todo.done ? @drawable/ic_todo_done : @drawable/ic_todo_not_done}"
+                android:src="@{todo.completed ? @drawable/ic_todo_done : @drawable/ic_todo_not_done}"
                 android:tint="@{ContextCompat.getColor(context, category.color)}"/>
     </RelativeLayout>
 </layout>
