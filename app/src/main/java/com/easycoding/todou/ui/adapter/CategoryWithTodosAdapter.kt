@@ -58,7 +58,7 @@ class CategoryWithTodosViewHolder private constructor(
 
             val adapter = TodoAdapter(categoryWithTodos.category, todoListener)
             rvTodos.adapter = adapter
-            // adapter.submitData(PagingData.from(categoryWithTodos.todos))
+            // adapter.submitData(PagingData.from(categoryWithTodos.todos.take(4)))
 
             executePendingBindings()
         }
