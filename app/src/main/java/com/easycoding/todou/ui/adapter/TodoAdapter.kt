@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.easycoding.todou.databinding.RecyclerviewTodoItemBinding
 import com.easycoding.todou.model.Category
@@ -12,7 +13,7 @@ import com.easycoding.todou.model.Todo
 class TodoAdapter(
     private val category: Category,
     private val listener: TodoListener? = null
-) : PagingDataAdapter<Todo, TodoViewHolder>(TodoDiffUtilCallBack()) {
+) : ListAdapter<Todo, TodoViewHolder>(TodoDiffUtilCallBack()) {
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it, category) }
     }

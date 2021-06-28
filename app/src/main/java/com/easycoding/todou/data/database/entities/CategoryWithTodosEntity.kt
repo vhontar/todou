@@ -17,3 +17,10 @@ fun CategoryWithTodosEntity.toModel() = CategoryWithTodos(
     category = categoryEntity.toModel(),
     todos = todosEntities.toModels()
 )
+
+fun List<CategoryWithTodosEntity>.toModels() = map {
+    CategoryWithTodos(
+        category = it.categoryEntity.toModel(),
+        todos = it.todosEntities.toModels()
+    )
+}

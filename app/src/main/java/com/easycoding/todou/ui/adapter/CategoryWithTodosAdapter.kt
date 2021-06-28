@@ -2,9 +2,8 @@ package com.easycoding.todou.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingData
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.easycoding.todou.databinding.RecyclerviewCategoryWithTodosItemBinding
 import com.easycoding.todou.databinding.RecyclerviewCategoryWithoutTodosItemBinding
@@ -14,7 +13,7 @@ import com.easycoding.todou.model.CategoryWithTodos
 class CategoryWithTodosAdapter(
     private val categoryListener: CategoryListener,
     private val todoListener: TodoListener
-) : PagingDataAdapter<CategoryWithTodos, RecyclerView.ViewHolder>(CategoryDiffUtilCallback()) {
+) : ListAdapter<CategoryWithTodos, RecyclerView.ViewHolder>(CategoryDiffUtilCallback()) {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is CategoryWithTodosViewHolder -> getItem(position)?.let { holder.bind(it) }
@@ -56,9 +55,12 @@ class CategoryWithTodosViewHolder private constructor(
         binding.apply {
             category = categoryWithTodos.category
 
-            val adapter = TodoAdapter(categoryWithTodos.category, todoListener)
+            val adapter = TodoAdapter(
+                categoryWithTodos.category,
+                todoListener
+            )
+            adapter.submitList(categoryWithTodos.todos.take(4))
             rvTodos.adapter = adapter
-            // adapter.submitData(PagingData.from(categoryWithTodos.todos.take(4)))
 
             executePendingBindings()
         }

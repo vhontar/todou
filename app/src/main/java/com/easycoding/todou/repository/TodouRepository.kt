@@ -3,9 +3,11 @@ package com.easycoding.todou.repository
 import com.easycoding.todou.data.database.dao.CategoryDao
 import com.easycoding.todou.data.database.dao.CategoriesWithTodosDao
 import com.easycoding.todou.data.database.dao.TodoDao
+import com.easycoding.todou.data.database.entities.toModels
 import com.easycoding.todou.model.Category
 import com.easycoding.todou.model.Todo
 import com.easycoding.todou.model.toEntity
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,7 +18,7 @@ class TodouRepository @Inject constructor(
     private val categoryWithTodosDao: CategoriesWithTodosDao
 ) {
     // get category with todos
-    fun getCategoriesWithTodos() = categoryWithTodosDao.getCategoriesWithTodos()
+    fun getCategoriesWithTodos() = categoryWithTodosDao.getCategoriesWithTodos().map { it.toModels() }
 
     // CRUD category
     fun createCategory(category: Category) = categoryDao.insert(category.toEntity())

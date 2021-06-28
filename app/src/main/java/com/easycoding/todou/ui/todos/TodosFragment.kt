@@ -5,7 +5,9 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.easycoding.todou.R
 import com.easycoding.todou.databinding.FragmentTodosBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TodosFragment: Fragment(R.layout.fragment_todos) {
 
     private lateinit var viewDataBinding: FragmentTodosBinding
