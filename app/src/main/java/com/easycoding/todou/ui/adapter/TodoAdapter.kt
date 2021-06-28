@@ -31,8 +31,9 @@ class TodoViewHolder private constructor(
         binding.rlTodoRoot.setOnClickListener { listener?.todoItemClicked() }
         // rethink the solution of changing image and sending the event to listener
         binding.ivTodoDone.setOnClickListener {
-            listener?.todoItemDoneClicked(binding.todo.isDone)
-            binding.todo = binding.todo.copy(isDone = !binding.todo.isDone)
+            val isDone = binding.todo?.isDone ?: false
+            listener?.todoItemDoneClicked(isDone)
+            binding.todo = binding.todo?.copy(isDone = !isDone)
             binding.executePendingBindings()
         }
     }
