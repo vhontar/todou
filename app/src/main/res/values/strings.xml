@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Todou</string>
+
+    <string name="search_title_menu">Search</string>
+    <string name="filter_title_menu">Filter</string>
+    <string name="filter_by_date_title_menu">Filter by date</string>
+    <string name="filter_by_name_title_menu">Filter by name</string>
+    <string name="hide_completed_title_menu">Hide completed</string>
+    <string name="delete_all_completed_title_menu">Delete all completed</string>
 </resources>
