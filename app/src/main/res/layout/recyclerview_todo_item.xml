@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="androidx.core.content.ContextCompat"/>
+        <variable
+                name="category"
+                type="com.easycoding.todou.model.Category"/>
         <variable
                 name="todo"
                 type="com.easycoding.todou.model.Todo"/>
     </data>
     <RelativeLayout
+            android:id="@+id/rlTodoRoot"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_padding"
+            android:gravity="center_vertical">
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTodoName"
+                style="@style/TodoTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{todo.name}"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/ivTodoDone"
+                app:strike="@{todo.done}"
+                tools:text="Build the todo app" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivTodoDone"
+                style="@style/TodoDoneImageView"
+                android:layout_alignParentEnd="true"
+                android:src="@{todo.done ? @drawable/ic_todo_done : @drawable/ic_todo_not_done}"
+                android:tint="@{ContextCompat.getColor(context, category.color)}"/>
     </RelativeLayout>
 </layout>

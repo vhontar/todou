@@ -39,11 +39,11 @@ abstract class TodouDatabase: RoomDatabase() {
             val todoDao = database.get().getTodoDao()
             applicationScope.launch {
                 // create category
-                categoryDao.insert(CategoryEntity(0, "Default", R.color.category_color_1, 0))
+                categoryDao.insert(CategoryEntity(0, "Todo", R.color.category_color_1, 0))
                 categoryDao.insert(CategoryEntity(1, "Home", R.color.category_color_2, 1))
                 categoryDao.insert(CategoryEntity(2, "Work", R.color.category_color_3, 2))
 
-                // create todos `Default` category
+                // create todos `Todos` category
                 todoDao.insert(TodoEntity(0, "Meet with friend", isImportant = true, categoryId = 0))
                 todoDao.insert(TodoEntity(0, "Buy sneekers", isImportant = false, categoryId = 0))
                 todoDao.insert(TodoEntity(0, "Call Mom", isImportant = false, categoryId = 0))

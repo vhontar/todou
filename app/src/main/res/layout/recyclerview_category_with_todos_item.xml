@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+                name="category"
+                type="com.easycoding.todou.model.Category"/>
+    </data>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin">
+
+        <View
+                android:id="@+id/vTransparentLine"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@android:color/transparent"/>
+
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_below="@id/vTransparentLine"
+                app:cardElevation="@dimen/category_card_elevation"
+                app:cardCornerRadius="@dimen/category_corner_radius">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTodos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/category_card_todos_margin_top"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+                android:id="@+id/tvCategoryNameWithTodos"
+                style="@style/CategoryTitle.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{category.name}"
+                android:elevation="@dimen/category_card_elevation"
+                android:layout_marginStart="@dimen/default_margin"
+                app:categoryBackground="@{category.color}"
+                tools:text="Todo"
+                tools:background="@drawable/category_background_1"/>
+    </RelativeLayout>
+</layout>

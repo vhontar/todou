@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TodoTextView">
+        <item name="android:textSize">@dimen/todo_text_size</item>
+    </style>
+
+    <style name="TodoDoneImageView">
+        <item name="android:layout_width">@dimen/todo_done_size</item>
+        <item name="android:layout_height">@dimen/todo_done_size</item>
+    </style>
+
+    <style name="CategoryTitle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="CategoryTitle.Big" parent="CategoryTitle">
+        <item name="android:padding">@dimen/default_padding</item>
+    </style>
+
+    <style name="CategoryTitle.Small" parent="CategoryTitle">
+        <item name="android:paddingStart">@dimen/default_padding</item>
+        <item name="android:paddingEnd">@dimen/default_padding</item>
+        <item name="android:paddingTop">@dimen/category_title_small_padding_top_bottom</item>
+        <item name="android:paddingBottom">@dimen/category_title_small_padding_top_bottom</item>
+    </style>
+</resources>
