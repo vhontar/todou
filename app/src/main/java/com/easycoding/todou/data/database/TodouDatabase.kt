@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.easycoding.todou.R
 import com.easycoding.todou.data.database.dao.CategoryDao
-import com.easycoding.todou.data.database.dao.CategoryWithTodosDao
+import com.easycoding.todou.data.database.dao.CategoriesWithTodosDao
 import com.easycoding.todou.data.database.dao.TodoDao
 import com.easycoding.todou.data.database.entities.CategoryEntity
 import com.easycoding.todou.data.database.entities.CategoryWithTodosEntity
@@ -24,7 +24,7 @@ const val TODOU_DATABASE_NAME = "todou_database"
     CategoryWithTodosEntity::class
 ], version = 1)
 abstract class TodouDatabase: RoomDatabase() {
-    abstract fun getCategoryWithTodosDao(): CategoryWithTodosDao
+    abstract fun getCategoriesWithTodosDao(): CategoriesWithTodosDao
     abstract fun getTodoDao(): TodoDao
     abstract fun getCategoryDao(): CategoryDao
 

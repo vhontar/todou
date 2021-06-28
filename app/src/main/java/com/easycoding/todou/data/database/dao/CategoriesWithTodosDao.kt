@@ -7,7 +7,7 @@ import com.easycoding.todou.data.database.entities.CategoryWithTodosEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface CategoryWithTodosDao: AaaDao<CategoryWithTodosEntity> {
+interface CategoriesWithTodosDao: AaaDao<CategoryWithTodosEntity> {
 
     @Transaction
     @Query("SELECT * FROM categories")

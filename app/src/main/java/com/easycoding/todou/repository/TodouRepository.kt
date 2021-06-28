@@ -1,7 +1,7 @@
 package com.easycoding.todou.repository
 
 import com.easycoding.todou.data.database.dao.CategoryDao
-import com.easycoding.todou.data.database.dao.CategoryWithTodosDao
+import com.easycoding.todou.data.database.dao.CategoriesWithTodosDao
 import com.easycoding.todou.data.database.dao.TodoDao
 import com.easycoding.todou.model.Category
 import com.easycoding.todou.model.Todo
@@ -13,7 +13,7 @@ import javax.inject.Singleton
 class TodouRepository @Inject constructor(
     private val todoDao: TodoDao,
     private val categoryDao: CategoryDao,
-    private val categoryWithTodosDao: CategoryWithTodosDao
+    private val categoryWithTodosDao: CategoriesWithTodosDao
 ) {
     // get category with todos
     fun getCategoriesWithTodos() = categoryWithTodosDao.getCategoriesWithTodos()
