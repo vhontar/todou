@@ -9,8 +9,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TodosViewModel @Inject constructor(
     private val todouRepository: TodouRepository,
-    stateHandle: SavedStateHandle
+    private val stateHandle: SavedStateHandle
 ) : ViewModel() {
-
 
 }

@@ -1,14 +1,12 @@
 package com.easycodingstudio.todou.data.database.dao
 
-import androidx.room.Dao
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import com.easycodingstudio.todou.data.database.entities.CategoryWithTodosEntity
 import com.easycodingstudio.todou.model.SortOrder
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface CategoriesWithTodosDao : AaaDao<CategoryWithTodosEntity> {
+interface CategoriesWithTodosDao {
 
     fun getCategoriesWithTodos(
         searchQuery: String,
@@ -16,22 +14,16 @@ interface CategoriesWithTodosDao : AaaDao<CategoryWithTodosEntity> {
         sortOrder: SortOrder
     ): Flow<List<CategoryWithTodosEntity>> {
         return when (sortOrder) {
-            SortOrder.SORT_BY_NAME -> getCategoriesWithTodosSortedByName(searchQuery, hideCompleted)
-            SortOrder.SORT_BY_DATE -> getCategoriesWithTodosSortedByDate(searchQuery, hideCompleted)
+            SortOrder.SORT_BY_NAME -> getCategoriesWithTodosSortedByName()
+            SortOrder.SORT_BY_DATE -> getCategoriesWithTodosSortedByDate()
         }
     }
 
     @Transaction
-    @Query("SELECT * FROM categories INNER JOIN todos WHERE name = :searchQuery")
-    fun getCategoriesWithTodosSortedByName(
-        searchQuery: String,
-        hideCompleted: Boolean
-    ): Flow<List<CategoryWithTodosEntity>>
+    @Query("SELECT * FROM categories")
+    fun getCategoriesWithTodosSortedByName(): Flow<List<CategoryWithTodosEntity>>
 
     @Transaction
-    @Query("SELECT * FROM categories INNER JOIN todos WHERE name = :searchQuery")
-    fun getCategoriesWithTodosSortedByDate(
-        searchQuery: String,
-        hideCompleted: Boolean
-    ): Flow<List<CategoryWithTodosEntity>>
+    @Query("SELECT * FROM categories")
+    fun getCategoriesWithTodosSortedByDate(): Flow<List<CategoryWithTodosEntity>>
 }

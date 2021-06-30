@@ -23,7 +23,7 @@
                 style="@style/TodoTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{todo.name}"
+                android:text="@{todo.task}"
                 android:layout_marginEnd="@dimen/default_margin"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/ivTodoDone"

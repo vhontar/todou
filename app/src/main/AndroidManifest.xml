@@ -3,10 +3,11 @@
           package="com.easycodingstudio.todou">
 
     <application
+            android:name=".TodouApplication"
             android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_compliant"
             android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@drawable/ic_compliant"
             android:supportsRtl="true"
             android:theme="@style/Theme.Todou">
         <activity android:name="com.easycodingstudio.todou.ui.TodouActivity">

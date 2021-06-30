@@ -21,7 +21,7 @@ import com.easycodingstudio.todou.util.exclusive
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 
-@AndroidEntryPoint
+@AndroidEntryPoint()
 class TodouFragment: Fragment(R.layout.fragment_todou), OnCategoryClickListener, OnTodoClickListener {
 
     private lateinit var viewDataBinding: FragmentTodouBinding
@@ -46,15 +46,15 @@ class TodouFragment: Fragment(R.layout.fragment_todou), OnCategoryClickListener,
             val event = viewModel.todouEvents.first()
             when(event) {
                 is TodouViewModel.TodouEvents.NavigateToCategoryWithAllTodosPage -> {
-                    val action = TodouFragmentDirections.actionTodouFragmentToTodosFragment(event.category)
+                    val action = TodouFragmentDirections.actionTodouFragmentToTodosFragment()
                     findNavController().navigate(action)
                 }
                 is TodouViewModel.TodouEvents.NavigateToCategoryPage -> {
-                    val action = TodouFragmentDirections.actionTodouFragmentToCategoryFragment(event.category)
+                    val action = TodouFragmentDirections.actionTodouFragmentToCategoryFragment()
                     findNavController().navigate(action)
                 }
                 is TodouViewModel.TodouEvents.NavigateToTodoPage -> {
-                    val action = TodouFragmentDirections.actionTodouFragmentToTodoFragment(event.todo)
+                    val action = TodouFragmentDirections.actionTodouFragmentToTodoFragment()
                     findNavController().navigate(action)
                 }
             }.exclusive

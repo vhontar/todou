@@ -1,6 +1,7 @@
 package com.easycodingstudio.todou.data.database.entities
 
 import androidx.room.Embedded
+import androidx.room.Entity
 import androidx.room.Relation
 import com.easycodingstudio.todou.model.CategoryWithTodos
 

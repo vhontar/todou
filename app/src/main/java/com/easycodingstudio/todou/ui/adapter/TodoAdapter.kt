@@ -38,7 +38,7 @@ class TodoViewHolder private constructor(
         }
         binding.ivTodoDone.setOnClickListener {
             localTodo?.let {
-                val updatedTodo = it.copy(isDone = !it.isDone)
+                val updatedTodo = it.copy(isCompleted = !it.isCompleted)
                 listener?.onTodoItemDoneClicked(updatedTodo)
             }
         }
