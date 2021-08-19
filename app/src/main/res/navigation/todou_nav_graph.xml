@@ -9,10 +9,11 @@
               android:label="TodosFragment"
               tools:layout="@layout/fragment_todos">
         <action android:id="@+id/action_todosFragment_to_todoFragment" app:destination="@id/todoFragment"/>
+        <argument android:name="argCategoryId" app:argType="long"/>
     </fragment>
     <fragment android:id="@+id/todouFragment"
               android:name="com.easycodingstudio.todou.ui.todou.TodouFragment"
-              android:label="TodouFragment"
+              android:label="Todou"
               tools:layout="@layout/fragment_todou">
         <argument android:name="categoryId" app:argType="integer"/>
         <action android:id="@+id/action_todouFragment_to_todoFragment" app:destination="@id/todoFragment"/>
@@ -22,9 +23,13 @@
     <fragment android:id="@+id/todoFragment"
               android:name="com.easycodingstudio.todou.ui.todo.TodoFragment"
               android:label="TodoFragment"
-              tools:layout="@layout/fragment_todo"/>
+              tools:layout="@layout/fragment_todo">
+        <argument android:name="argTodoId" app:argType="long" android:defaultValue="-1L"/>
+    </fragment>
     <fragment android:id="@+id/categoryFragment"
               android:name="com.easycodingstudio.todou.ui.category.CategoryFragment"
               android:label="CategoryFragment"
-              tools:layout="@layout/fragment_category"/>
+              tools:layout="@layout/fragment_category">
+        <argument android:name="argCategoryId" app:argType="long" android:defaultValue="-1L"/>
+    </fragment>
 </navigation>

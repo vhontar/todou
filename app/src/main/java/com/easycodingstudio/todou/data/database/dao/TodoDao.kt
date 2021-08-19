@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface TodoDao {
 
     @Query("SELECT * FROM todos WHERE category_id = :categoryId")
-    fun getTodosForCategory(categoryId: Int): Flow<List<TodoEntity>>
+    fun getTodosForCategory(categoryId: Long): Flow<List<TodoEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: TodoEntity): Long

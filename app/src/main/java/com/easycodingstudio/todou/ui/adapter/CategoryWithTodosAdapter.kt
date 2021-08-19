@@ -9,10 +9,10 @@ import com.easycodingstudio.todou.databinding.RecyclerviewCategoryWithTodosItemB
 import com.easycodingstudio.todou.databinding.RecyclerviewCategoryWithoutTodosItemBinding
 import com.easycodingstudio.todou.model.Category
 import com.easycodingstudio.todou.model.CategoryWithTodos
+import com.easycodingstudio.todou.ui.todou.TodouViewModel
 
 class CategoryWithTodosAdapter(
-    private val categoryListener: OnCategoryClickListener,
-    private val todoListener: OnTodoClickListener
+    private val viewModel: TodouViewModel
 ) : ListAdapter<CategoryWithTodos, RecyclerView.ViewHolder>(CategoryDiffUtilCallback()) {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
@@ -24,9 +24,9 @@ class CategoryWithTodosAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             CategoryViewHolderTypes.CATEGORY_WITH_TODOS.value ->
-                CategoryWithTodosViewHolder.from(parent, categoryListener, todoListener)
+                CategoryWithTodosViewHolder.from(parent, viewModel)
             CategoryViewHolderTypes.CATEGORY_WITHOUT_TODOS.value ->
-                CategoryWithoutTodosViewHolder.from(parent, categoryListener)
+                CategoryWithoutTodosViewHolder.from(parent, viewModel)
             else -> throw ClassNotFoundException()
         }
     }
@@ -41,11 +41,10 @@ class CategoryWithTodosAdapter(
 }
 
 class CategoryWithTodosViewHolder private constructor(
-    private val binding: RecyclerviewCategoryWithTodosItemBinding
+    private val binding: RecyclerviewCategoryWithTodosItemBinding,
+    private val viewModel: TodouViewModel
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var categoryListener: OnCategoryClickListener? = null
-    private var todoListener: OnTodoClickListener? = null
     private var localCategory: Category? = null
 
     init {
@@ -53,9 +52,7 @@ class CategoryWithTodosViewHolder private constructor(
          * It's cheaper to subscribe to listeners only for created view holders and reuse them when new
          * data binding to the created view holder
          * */
-        binding.tvCategoryNameWithTodos.setOnClickListener {
-            localCategory?.let { categoryListener?.onCategoryItemClicked(it) }
-        }
+        binding.tvCategoryNameWithTodos.setOnClickListener { onCategoryItemClicked() }
     }
 
     fun bind(categoryWithTodos: CategoryWithTodos) {
@@ -67,7 +64,7 @@ class CategoryWithTodosViewHolder private constructor(
 
             val adapter = TodoAdapter(
                 categoryWithTodos.category,
-                todoListener
+                viewModel
             )
             adapter.submitList(categoryWithTodos.todos.take(4))
             rvTodos.adapter = adapter
@@ -76,27 +73,27 @@ class CategoryWithTodosViewHolder private constructor(
         }
     }
 
+    private fun onCategoryItemClicked() {
+        localCategory?.let { viewModel.onCategoryItemClicked(it) }
+    }
+
     companion object {
         fun from(
             parent: ViewGroup,
-            categoryListener: OnCategoryClickListener,
-            todoListener: OnTodoClickListener
+            viewModel: TodouViewModel
         ): CategoryWithTodosViewHolder {
             val inflater = LayoutInflater.from(parent.context)
             val binding = RecyclerviewCategoryWithTodosItemBinding.inflate(inflater, parent, false)
-            val viewHolder = CategoryWithTodosViewHolder(binding)
-            viewHolder.categoryListener = categoryListener
-            viewHolder.todoListener = todoListener
-            return viewHolder
+            return CategoryWithTodosViewHolder(binding, viewModel)
         }
     }
 }
 
 class CategoryWithoutTodosViewHolder private constructor(
-    private val binding: RecyclerviewCategoryWithoutTodosItemBinding
+    private val binding: RecyclerviewCategoryWithoutTodosItemBinding,
+    private val viewModel: TodouViewModel
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var categoryListener: OnCategoryClickListener? = null
     private var localCategory: Category? = null
 
     init {
@@ -104,12 +101,8 @@ class CategoryWithoutTodosViewHolder private constructor(
          * It's cheaper to subscribe to listeners only for created view holders and reuse them when new
          * data binding to the created view holder
          * */
-        binding.tvCategoryTitle.setOnClickListener {
-            localCategory?.let { categoryListener?.onCategoryItemClicked(it) }
-        }
-        binding.root.setOnClickListener {
-            localCategory?.let { categoryListener?.onCategoryWithAllTodosClicked(it) }
-        }
+        binding.tvCategoryTitle.setOnClickListener { onCategoryItemClicked() }
+        binding.root.setOnClickListener { onCategoryWithAllTodosClicked() }
     }
 
     fun bind(category: Category) {
@@ -120,26 +113,26 @@ class CategoryWithoutTodosViewHolder private constructor(
         binding.executePendingBindings()
     }
 
+    private fun onCategoryItemClicked() {
+        localCategory?.let { viewModel.onCategoryItemClicked(it) }
+    }
+
+    private fun onCategoryWithAllTodosClicked() {
+        localCategory?.let { viewModel.onCategoryWithAllTodosClicked(it) }
+    }
+
     companion object {
-        fun from(parent: ViewGroup, categoryListener: OnCategoryClickListener): CategoryWithoutTodosViewHolder {
+        fun from(parent: ViewGroup, viewModel: TodouViewModel): CategoryWithoutTodosViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = RecyclerviewCategoryWithoutTodosItemBinding.inflate(layoutInflater, parent, false)
-            val viewHolder = CategoryWithoutTodosViewHolder(binding)
-            viewHolder.categoryListener = categoryListener
-            return viewHolder
+            return CategoryWithoutTodosViewHolder(binding, viewModel)
         }
     }
-}
-
-interface OnCategoryClickListener {
-    fun onCategoryItemClicked(category: Category)
-    fun onCategoryWithAllTodosClicked(category: Category)
 }
 
 class CategoryDiffUtilCallback : DiffUtil.ItemCallback<CategoryWithTodos>() {
     override fun areItemsTheSame(oldItem: CategoryWithTodos, newItem: CategoryWithTodos) =
         oldItem == newItem
-
     override fun areContentsTheSame(oldItem: CategoryWithTodos, newItem: CategoryWithTodos) =
         oldItem.category.id == newItem.category.id
 }

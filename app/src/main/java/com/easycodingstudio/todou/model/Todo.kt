@@ -6,11 +6,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Todo(
-    val id: Int,
+    val id: Long,
     val task: String,
     val isCompleted: Boolean,
     val isImportant: Boolean,
-    val categoryId: Int = 0
+    val categoryId: Long
 ): Parcelable
 
 fun Todo.toEntity() = TodoEntity(id, task, isCompleted, isImportant, categoryId = categoryId)

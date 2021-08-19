@@ -4,13 +4,13 @@ import androidx.room.*
 import com.easycodingstudio.todou.data.database.entities.CategoryWithTodosEntity
 import com.easycodingstudio.todou.model.SortOrder
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 
 @Dao
 interface CategoriesWithTodosDao {
 
     fun getCategoriesWithTodos(
-        searchQuery: String,
-        hideCompleted: Boolean,
         sortOrder: SortOrder
     ): Flow<List<CategoryWithTodosEntity>> {
         return when (sortOrder) {

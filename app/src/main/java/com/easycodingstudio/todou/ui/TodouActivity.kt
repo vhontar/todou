@@ -11,7 +11,7 @@ import com.easycodingstudio.todou.R
 import com.easycodingstudio.todou.databinding.ActivityTodouBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint()
+@AndroidEntryPoint
 class TodouActivity : AppCompatActivity() {
     private lateinit var viewDataBinding: ActivityTodouBinding
     private lateinit var navController: NavController

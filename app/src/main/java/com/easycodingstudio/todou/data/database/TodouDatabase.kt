@@ -28,6 +28,7 @@ abstract class TodouDatabase: RoomDatabase() {
     abstract fun getCategoryDao(): CategoryDao
 
     class Callback @Inject constructor(
+        // Provider helps to inject the database after hilt creates it.
         private val database: Provider<TodouDatabase>,
         @ApplicationScope private val applicationScope: CoroutineScope
     ): RoomDatabase.Callback() {
@@ -38,21 +39,25 @@ abstract class TodouDatabase: RoomDatabase() {
             val todoDao = database.get().getTodoDao()
             applicationScope.launch {
                 // create category
-                categoryDao.insert(CategoryEntity(0, "Todo", R.color.category_color_1, 0))
-                categoryDao.insert(CategoryEntity(1, "Home", R.color.category_color_2, 1))
-                categoryDao.insert(CategoryEntity(2, "Work", R.color.category_color_3, 2))
+                categoryDao.insert(CategoryEntity(1, "Todo", R.color.category_color_1, 1))
+                categoryDao.insert(CategoryEntity(2, "Home", R.color.category_color_2, 2))
+                categoryDao.insert(CategoryEntity(3, "Work", R.color.category_color_3, 3))
 
                 // create todos `Todos` category
-                todoDao.insert(TodoEntity(0, "Meet with friend", isImportant = true, categoryId = 0))
-                todoDao.insert(TodoEntity(1, "Buy sneekers", isImportant = false, categoryId = 0))
-                todoDao.insert(TodoEntity(2, "Call Mom", isImportant = false, categoryId = 0))
-                todoDao.insert(TodoEntity(3, "Invent time machine", isImportant = true, categoryId = 0))
-                todoDao.insert(TodoEntity(4, "Read a book", isImportant = false, categoryId = 0))
+                todoDao.insert(TodoEntity(task = "Learn english words", isImportant = false, categoryId = 1))
+                todoDao.insert(TodoEntity(task = "Watch nine-nine brooklyn", isImportant = false, categoryId = 1))
 
                 // create todos `Home` category
-                todoDao.insert(TodoEntity(5, "Buy milk", isImportant = true, categoryId = 1))
-                todoDao.insert(TodoEntity(6, "Buy bread", isImportant = false, categoryId = 1))
-                todoDao.insert(TodoEntity(7, "Repair a stool", isImportant = false, categoryId = 1))
+                todoDao.insert(TodoEntity(task = "Meet with friend", isImportant = true, categoryId = 2))
+                todoDao.insert(TodoEntity(task = "Buy sneekers", isImportant = false, categoryId = 2))
+                todoDao.insert(TodoEntity(task = "Call Mom", isImportant = false, categoryId = 2))
+                todoDao.insert(TodoEntity(task = "Invent time machine", isImportant = true, categoryId = 2))
+                todoDao.insert(TodoEntity(task = "Read a book", isImportant = false, categoryId = 2))
+
+                // create todos `Work` category
+                todoDao.insert(TodoEntity(task = "Continue Todou project", isImportant = true, categoryId = 3))
+                todoDao.insert(TodoEntity(task = "Finish Cancel/Payment subscription popup", isImportant = false, categoryId = 3))
+                todoDao.insert(TodoEntity(task = "Repair a stool", isImportant = false, categoryId = 3))
             }
         }
     }

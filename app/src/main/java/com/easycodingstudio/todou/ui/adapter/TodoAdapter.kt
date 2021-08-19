@@ -8,24 +8,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.easycodingstudio.todou.databinding.RecyclerviewTodoItemBinding
 import com.easycodingstudio.todou.model.Category
 import com.easycodingstudio.todou.model.Todo
+import com.easycodingstudio.todou.ui.todou.TodouViewModel
 
 class TodoAdapter(
     private val category: Category,
-    private val listener: OnTodoClickListener? = null
+    private val viewModel: TodouViewModel
 ) : ListAdapter<Todo, TodoViewHolder>(TodoDiffUtilCallBack()) {
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it, category) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        TodoViewHolder.from(parent, listener)
+        TodoViewHolder.from(parent, viewModel)
 }
 
 class TodoViewHolder private constructor(
-    private val binding: RecyclerviewTodoItemBinding
+    private val binding: RecyclerviewTodoItemBinding,
+    private val viewModel: TodouViewModel
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var listener: OnTodoClickListener? = null
     private var localTodo: Todo? = null
 
     init {
@@ -33,15 +34,8 @@ class TodoViewHolder private constructor(
          * It's cheaper to subscribe to listeners only for created view holders and reuse them when new
          * data binding to the created view holder
          * */
-        binding.rlTodoRoot.setOnClickListener {
-            localTodo?.let { listener?.onTodoItemClicked(it) }
-        }
-        binding.ivTodoDone.setOnClickListener {
-            localTodo?.let {
-                val updatedTodo = it.copy(isCompleted = !it.isCompleted)
-                listener?.onTodoItemDoneClicked(updatedTodo)
-            }
-        }
+        binding.tvTodoName.setOnClickListener { onTodoItemClicked() }
+        binding.ivTodoDone.setOnClickListener { onTodoItemDoneClicked() }
     }
 
     fun bind(todo: Todo, category: Category) {
@@ -53,20 +47,26 @@ class TodoViewHolder private constructor(
         binding.executePendingBindings()
     }
 
-    companion object {
-        fun from(parent: ViewGroup, listener: OnTodoClickListener?): TodoViewHolder {
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = RecyclerviewTodoItemBinding.inflate(layoutInflater, parent, false)
-            val viewHolder = TodoViewHolder(binding)
-            viewHolder.listener = listener
-            return TodoViewHolder(binding)
+    private fun onTodoItemClicked() {
+        localTodo?.let {
+            viewModel.onTodoItemClicked(it)
         }
     }
-}
 
-interface OnTodoClickListener {
-    fun onTodoItemClicked(todo: Todo)
-    fun onTodoItemDoneClicked(todo: Todo)
+    private fun onTodoItemDoneClicked() {
+        localTodo?.let {
+            val updatedTodo = it.copy(isCompleted = !it.isCompleted)
+            viewModel.onTodoItemDoneClicked(updatedTodo)
+        }
+    }
+
+    companion object {
+        fun from(parent: ViewGroup, viewModel: TodouViewModel): TodoViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val binding = RecyclerviewTodoItemBinding.inflate(layoutInflater, parent, false)
+            return TodoViewHolder(binding, viewModel)
+        }
+    }
 }
 
 class TodoDiffUtilCallBack : DiffUtil.ItemCallback<Todo>() {

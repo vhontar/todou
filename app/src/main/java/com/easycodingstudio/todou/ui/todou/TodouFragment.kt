@@ -5,37 +5,45 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.easycodingstudio.todou.R
 import com.easycodingstudio.todou.databinding.FragmentTodouBinding
-import com.easycodingstudio.todou.model.Category
 import com.easycodingstudio.todou.model.SortOrder
-import com.easycodingstudio.todou.model.Todo
-import com.easycodingstudio.todou.ui.adapter.OnCategoryClickListener
 import com.easycodingstudio.todou.ui.adapter.CategoryWithTodosAdapter
-import com.easycodingstudio.todou.ui.adapter.OnTodoClickListener
 import com.easycodingstudio.todou.util.exclusive
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 
-@AndroidEntryPoint()
-class TodouFragment: Fragment(R.layout.fragment_todou), OnCategoryClickListener, OnTodoClickListener {
-
+@AndroidEntryPoint
+class TodouFragment: Fragment(R.layout.fragment_todou) {
     private lateinit var viewDataBinding: FragmentTodouBinding
     private val viewModel: TodouViewModel by viewModels()
 
-    private val adapter = CategoryWithTodosAdapter(this, this)
+    private lateinit var adapter: CategoryWithTodosAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        adapter = CategoryWithTodosAdapter(viewModel)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewDataBinding = FragmentTodouBinding.bind(view)
+        viewDataBinding.lifecycleOwner = this
+        viewDataBinding.viewmodel = viewModel
 
         viewDataBinding.apply {
+            val itemDecorator = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+            itemDecorator.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider)!!)
             rvCategoriesWithTodos.adapter = adapter
+            rvCategoriesWithTodos.addItemDecoration(itemDecorator)
         }
 
         viewModel.categoriesWithTodos.observe(viewLifecycleOwner) {
@@ -46,15 +54,15 @@ class TodouFragment: Fragment(R.layout.fragment_todou), OnCategoryClickListener,
             val event = viewModel.todouEvents.first()
             when(event) {
                 is TodouViewModel.TodouEvents.NavigateToCategoryWithAllTodosPage -> {
-                    val action = TodouFragmentDirections.actionTodouFragmentToTodosFragment()
+                    val action = TodouFragmentDirections.actionTodouFragmentToTodosFragment(event.category.id)
                     findNavController().navigate(action)
                 }
                 is TodouViewModel.TodouEvents.NavigateToCategoryPage -> {
-                    val action = TodouFragmentDirections.actionTodouFragmentToCategoryFragment()
+                    val action = TodouFragmentDirections.actionTodouFragmentToCategoryFragment(event.category.id)
                     findNavController().navigate(action)
                 }
                 is TodouViewModel.TodouEvents.NavigateToTodoPage -> {
-                    val action = TodouFragmentDirections.actionTodouFragmentToTodoFragment()
+                    val action = TodouFragmentDirections.actionTodouFragmentToTodoFragment(event.todo.id)
                     findNavController().navigate(action)
                 }
             }.exclusive
@@ -86,18 +94,5 @@ class TodouFragment: Fragment(R.layout.fragment_todou), OnCategoryClickListener,
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onCategoryWithAllTodosClicked(category: Category) {
-        viewModel.onCategoryWithAllTodosClicked(category)
-    }
-    override fun onCategoryItemClicked(category: Category) {
-        viewModel.onCategoryItemClicked(category)
-    }
-    override fun onTodoItemClicked(todo: Todo) {
-        viewModel.onTodoItemClicked(todo)
-    }
-    override fun onTodoItemDoneClicked(todo: Todo) {
-        viewModel.onTodoItemDoneClicked(todo)
     }
 }

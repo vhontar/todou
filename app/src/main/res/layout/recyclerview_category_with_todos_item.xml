@@ -10,13 +10,14 @@
     </data>
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_margin"
+            android:clipToPadding="false">
 
-        <View
-                android:id="@+id/vTransparentLine"
-                android:layout_width="match_parent"
-                android:layout_height="15dp"
-                android:background="@android:color/transparent"/>
+        <View android:id="@+id/vTransparentLine"
+              android:layout_width="match_parent"
+              android:layout_height="15dp"
+              android:background="@android:color/transparent"/>
 
         <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -34,7 +35,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
         </androidx.cardview.widget.CardView>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvCategoryNameWithTodos"
                 style="@style/CategoryTitle.Small"
                 android:layout_width="wrap_content"

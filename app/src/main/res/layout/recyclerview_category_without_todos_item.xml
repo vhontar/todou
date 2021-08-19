@@ -7,12 +7,13 @@
                 type="com.easycodingstudio.todou.model.Category"/>
     </data>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCategoryTitle"
             style="@style/CategoryTitle.Big"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{category.name}"
             app:categoryBackground="@{category.color}"
+            android:layout_margin="@dimen/default_margin"
             tools:background="@drawable/category_background_1"/>
 </layout>
