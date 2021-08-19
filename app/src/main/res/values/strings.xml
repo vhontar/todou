@@ -10,4 +10,5 @@
 
     <!-- Category -->
     <string name="category_new">New category</string>
+    <string name="category_name_empty">Category name cannot be empty.</string>
 </resources>

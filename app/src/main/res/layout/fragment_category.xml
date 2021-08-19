@@ -32,7 +32,7 @@
            <RelativeLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                    android:padding="@dimen/default_margin">
+                   android:padding="@dimen/default_margin">
 
                <androidx.appcompat.widget.AppCompatEditText
                        android:id="@+id/etCategoryName"
@@ -40,7 +40,10 @@
                        android:layout_height="wrap_content"
                        android:layout_marginTop="@dimen/default_margin"
                        android:textSize="16sp"
-                       android:text="@={viewmodel.category.name}"/>
+                       android:singleLine="true"
+                       android:maxLength="50"
+                       android:imeOptions="actionDone"
+                       android:text="@={viewmodel.categoryName}"/>
 
                <androidx.recyclerview.widget.RecyclerView
                        android:id="@+id/rvColors"
@@ -57,7 +60,7 @@
                 style="@style/CategoryTitle.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewmodel.category.name.empty ? @string/category_new : viewmodel.category.name}"
+                android:text="@{viewmodel.category.name.empty ? @string/category_new : viewmodel.categoryName}"
                 android:elevation="@dimen/category_card_elevation"
                 android:layout_marginStart="@dimen/default_margin"
                 app:categoryBackground="@{viewmodel.category.color}"

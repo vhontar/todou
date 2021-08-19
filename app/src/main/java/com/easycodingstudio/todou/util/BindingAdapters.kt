@@ -46,5 +46,7 @@ fun AppCompatTextView.categoryBackground(color: Int) {
 
 @BindingAdapter("colorTint")
 fun AppCompatImageView.setColorTint(colorInt: Int) {
-    imageTintList = ColorStateList.valueOf(colorInt)
+    if (colorInt != 0) {
+        imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context, colorInt))
+    }
 }

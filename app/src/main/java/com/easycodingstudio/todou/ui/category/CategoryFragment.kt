@@ -2,16 +2,19 @@ package com.easycodingstudio.todou.ui.category
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.easycodingstudio.todou.R
 import com.easycodingstudio.todou.constants.ColorConstants
 import com.easycodingstudio.todou.databinding.FragmentCategoryBinding
 import com.easycodingstudio.todou.ui.adapter.ColorAdapter
+import com.easycodingstudio.todou.ui.custom.GridSpacingItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class CategoryFragment: Fragment(R.layout.fragment_category) {
@@ -35,14 +38,28 @@ class CategoryFragment: Fragment(R.layout.fragment_category) {
         viewDataBinding.viewmodel = viewModel
 
         viewDataBinding.apply {
+            val itemDecorator = GridSpacingItemDecoration(
+                6,
+                resources.getDimension(R.dimen.vertical_divider).toInt(),
+                false
+            )
             rvColors.adapter = adapter
             rvColors.layoutManager = GridLayoutManager(requireContext(), 6)
-            val itemDecorator = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-            itemDecorator.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider)!!)
             rvColors.addItemDecoration(itemDecorator)
 
-            btnSave.setOnClickListener {
-                viewModel.save()
+            btnSave.setOnClickListener { viewModel.save() }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.categoryEvents.collect { event ->
+                when(event) {
+                    is CategoryViewModel.CategoryEvents.ShowErrorMessage -> {
+                        Toast.makeText(requireContext(), event.stringId, Toast.LENGTH_LONG).show()
+                    }
+                    is CategoryViewModel.CategoryEvents.CloseCategoryPage -> {
+                        findNavController().navigateUp()
+                    }
+                }
             }
         }
     }

@@ -14,4 +14,7 @@
     <dimen name="category_card_todos_margin_top">30dp</dimen>
     <dimen name="category_title_radius">10dp</dimen>
     <dimen name="category_title_small_padding_top_bottom">8dp</dimen>
+
+    <!-- Other -->
+    <dimen name="vertical_divider">10dp</dimen>
 </resources>
