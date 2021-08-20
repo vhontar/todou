@@ -39,4 +39,20 @@ class TodosViewModel @Inject constructor(
             todouRepository.updateTodo(todo)
         }
     }
+
+    fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
+        // save to data store
+    }
+
+    fun onHideCompletedClicked(isHidden: Boolean) = viewModelScope.launch {
+        // save to data store
+    }
+
+    fun onDeleteAllCompletedClicked() = viewModelScope.launch {
+        // show confirmation dialog
+    }
+
+    fun onArchiveClicked() = viewModelScope.launch {
+        todosEventsChannel.send(TodouViewModel.TodouEvents.NavigateToArchivePage)
+    }
 }

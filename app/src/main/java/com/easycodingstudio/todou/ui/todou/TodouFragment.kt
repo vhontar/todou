@@ -35,6 +35,8 @@ class TodouFragment: Fragment(R.layout.fragment_todou) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
+
         viewDataBinding = FragmentTodouBinding.bind(view)
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.viewmodel = viewModel
@@ -65,6 +67,9 @@ class TodouFragment: Fragment(R.layout.fragment_todou) {
                     val action = TodouFragmentDirections.actionTodouFragmentToTodoFragment(event.todo.id)
                     findNavController().navigate(action)
                 }
+                is TodouViewModel.TodouEvents.NavigateToArchivePage -> {
+
+                }
             }.exclusive
         }
     }
@@ -90,6 +95,10 @@ class TodouFragment: Fragment(R.layout.fragment_todou) {
             }
             R.id.action_delete_all_completed -> {
                 viewModel.onDeleteAllCompletedClicked()
+                true
+            }
+            R.id.action_archive -> {
+                viewModel.onArchiveClicked()
                 true
             }
             else -> super.onOptionsItemSelected(item)

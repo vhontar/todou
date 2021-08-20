@@ -7,6 +7,7 @@
     <string name="filter_by_name_title_menu">Filter by name</string>
     <string name="hide_completed_title_menu">Hide completed</string>
     <string name="delete_all_completed_title_menu">Delete all completed</string>
+    <string name="archive">Archive</string>
 
     <!-- Category -->
     <string name="category_new">New category</string>

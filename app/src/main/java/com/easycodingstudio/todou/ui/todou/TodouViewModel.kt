@@ -62,6 +62,10 @@ class TodouViewModel @Inject constructor(
         // show confirmation dialog
     }
 
+    fun onArchiveClicked() = viewModelScope.launch {
+        todouEventsChannel.send(TodouEvents.NavigateToArchivePage)
+    }
+
     fun getDay() = currentDate.dayOfMonth.toString()
     fun getMonth() = currentDate.toString("MMM")
     fun getYear() = currentDate.year.toString()
@@ -72,5 +76,6 @@ class TodouViewModel @Inject constructor(
         class NavigateToCategoryWithAllTodosPage(val category: Category) : TodouEvents()
         class NavigateToCategoryPage(val category: Category) : TodouEvents()
         class NavigateToTodoPage(val todo: Todo) : TodouEvents()
+        object NavigateToArchivePage: TodouEvents()
     }
 }

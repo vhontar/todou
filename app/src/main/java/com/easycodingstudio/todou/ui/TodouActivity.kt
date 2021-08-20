@@ -2,6 +2,7 @@ package com.easycodingstudio.todou.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -28,6 +29,9 @@ class TodouActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
         setupActionBarWithNavController(navController)
+
+        // TODO for testing purpose
+        setDefaultNightMode(MODE_NIGHT_NO)
     }
 
     override fun onSupportNavigateUp() =
