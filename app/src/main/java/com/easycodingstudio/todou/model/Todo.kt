@@ -2,6 +2,7 @@ package com.easycodingstudio.todou.model
 
 import android.os.Parcelable
 import com.easycodingstudio.todou.data.database.entities.TodoEntity
+import com.easycodingstudio.todou.ui.adapter.CompletedTodoHolder
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

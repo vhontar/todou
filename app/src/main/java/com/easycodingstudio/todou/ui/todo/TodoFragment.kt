@@ -6,4 +6,5 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TodoFragment: Fragment(R.layout.fragment_todo) {
+
 }

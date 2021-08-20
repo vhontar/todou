@@ -3,6 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="androidx.core.text.HtmlCompat"/>
         <variable
                 name="viewmodel"
                 type="com.easycodingstudio.todou.ui.todou.TodouViewModel"/>
@@ -64,13 +65,25 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="22:40"/>
 
+            <TextView
+                    android:id="@+id/tvArchive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{HtmlCompat.fromHtml(@string/archive_underlinde, HtmlCompat.FROM_HTML_MODE_LEGACY)}"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    app:layout_constraintTop_toBottomOf="@id/tvTime"
+                    app:layout_constraintBottom_toTopOf="@id/rvCategoriesWithTodos"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="@string/archive_underlinde"/>
+
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCategoriesWithTodos"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@id/tvDay"/>
+                    app:layout_constraintTop_toBottomOf="@id/tvArchive"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

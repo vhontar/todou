@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Todou</string>
+
+    <string name="search_title_menu">Поиск</string>
+    <string name="filter_title_menu">Фильтр</string>
+    <string name="filter_by_date_title_menu">Фильтровать по дате</string>
+    <string name="filter_by_name_title_menu">Фильтровать по имени</string>
+    <string name="hide_completed_title_menu">Скрыть сделанные</string>
+    <string name="delete_all_completed_title_menu">Удалить все сделанные</string>
+
+    <!-- Category -->
+    <string name="category_new">Новая категория</string>
+    <string name="category_name_empty">Категория не может быть без имени.</string>
+
+    <!-- Archive -->
+    <string name="archive">Архив</string>
+    <string name="archive_underlinde"><![CDATA[<u>Архив</u>]]></string>
+</resources>

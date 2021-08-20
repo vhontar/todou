@@ -46,6 +46,10 @@ class TodouFragment: Fragment(R.layout.fragment_todou) {
             itemDecorator.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider)!!)
             rvCategoriesWithTodos.adapter = adapter
             rvCategoriesWithTodos.addItemDecoration(itemDecorator)
+
+            tvArchive.setOnClickListener {
+                viewModel.onArchiveClicked()
+            }
         }
 
         viewModel.categoriesWithTodos.observe(viewLifecycleOwner) {
@@ -68,7 +72,8 @@ class TodouFragment: Fragment(R.layout.fragment_todou) {
                     findNavController().navigate(action)
                 }
                 is TodouViewModel.TodouEvents.NavigateToArchivePage -> {
-
+                    val action = TodouFragmentDirections.actionTodouFragmentToArchiveFragment()
+                    findNavController().navigate(action)
                 }
             }.exclusive
         }
@@ -95,10 +100,6 @@ class TodouFragment: Fragment(R.layout.fragment_todou) {
             }
             R.id.action_delete_all_completed -> {
                 viewModel.onDeleteAllCompletedClicked()
-                true
-            }
-            R.id.action_archive -> {
-                viewModel.onArchiveClicked()
                 true
             }
             else -> super.onOptionsItemSelected(item)

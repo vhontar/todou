@@ -80,10 +80,6 @@ class TodosFragment: Fragment(R.layout.fragment_todos) {
                 viewModel.onDeleteAllCompletedClicked()
                 true
             }
-            R.id.action_archive -> {
-                viewModel.onArchiveClicked()
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }

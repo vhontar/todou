@@ -19,6 +19,7 @@
         <action android:id="@+id/action_todouFragment_to_todoFragment" app:destination="@id/todoFragment"/>
         <action android:id="@+id/action_todouFragment_to_categoryFragment" app:destination="@id/categoryFragment"/>
         <action android:id="@+id/action_todouFragment_to_todosFragment" app:destination="@id/todosFragment"/>
+        <action android:id="@+id/action_todouFragment_to_archiveFragment" app:destination="@id/archiveFragment"/>
     </fragment>
     <fragment android:id="@+id/todoFragment"
               android:name="com.easycodingstudio.todou.ui.todo.TodoFragment"
@@ -32,4 +33,6 @@
               tools:layout="@layout/fragment_category">
         <argument android:name="argCategoryId" app:argType="long" android:defaultValue="-1L"/>
     </fragment>
+    <fragment android:id="@+id/archiveFragment" android:name="com.easycodingstudio.todou.ui.archive.ArchiveFragment"
+              android:label="ArchiveFragment"/>
 </navigation>
