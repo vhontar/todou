@@ -7,6 +7,9 @@
         <variable
                 name="category"
                 type="com.easycodingstudio.todou.model.Category"/>
+        <variable
+                name="todosMoreThan4"
+                type="Boolean"/>
     </data>
     <RelativeLayout
             android:layout_width="match_parent"
@@ -27,12 +30,28 @@
                 app:cardElevation="@dimen/category_card_elevation"
                 app:cardCornerRadius="@dimen/category_corner_radius">
 
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvTodos"
+            <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/category_card_todos_margin_top"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                    android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvTodos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/category_card_todos_margin_top"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMoreTodos"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_more"
+                        android:layout_centerInParent="true"
+                        android:layout_below="@id/rvTodos"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:visibility="@{todosMoreThan4 ? View.VISIBLE : View.GONE}"/>
+            </RelativeLayout>
+
         </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.AppCompatTextView

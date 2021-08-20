@@ -5,18 +5,52 @@
 
     <data>
         <variable
-                name="category"
-                type="com.easycodingstudio.todou.model.Category"/>
+                name="viewmodel"
+                type="com.easycodingstudio.todou.ui.todos.TodosViewModel"/>
     </data>
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".ui.todos.TodosFragment">
+            android:layout_height="match_parent">
 
-        <TextView
-                android:layout_width="wrap_content"
+        <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hello world!"/>
+                android:padding="@dimen/default_margin"
+                android:clipToPadding="false">
 
-    </RelativeLayout>
+            <View android:id="@+id/vTransparentLine"
+                  android:layout_width="match_parent"
+                  android:layout_height="15dp"
+                  android:background="@android:color/transparent"/>
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:layout_below="@id/vTransparentLine"
+                    app:cardElevation="@dimen/category_card_elevation"
+                    app:cardCornerRadius="@dimen/category_corner_radius">
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvTodos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/category_card_todos_margin_top"
+                        android:overScrollMode="never"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCategoryNameWithTodos"
+                    style="@style/CategoryTitle.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewmodel.categoryWithTodos.category.name}"
+                    android:elevation="@dimen/category_card_elevation"
+                    android:layout_marginStart="@dimen/default_margin"
+                    app:categoryBackground="@{viewmodel.categoryWithTodos.category.color}"
+                    tools:text="Todo"
+                    tools:background="@drawable/category_background_1"/>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

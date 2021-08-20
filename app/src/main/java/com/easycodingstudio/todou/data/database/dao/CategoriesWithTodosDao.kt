@@ -19,6 +19,16 @@ interface CategoriesWithTodosDao {
         }
     }
 
+    fun getCategoryWithTodos(
+        categoryId: Long,
+        sortOrder: SortOrder
+    ): Flow<CategoryWithTodosEntity> {
+        return when (sortOrder) {
+            SortOrder.SORT_BY_NAME -> getCategoryWithTodosSortedByName(categoryId)
+            SortOrder.SORT_BY_DATE -> getCategoryWithTodosSortedByDate(categoryId)
+        }
+    }
+
     @Transaction
     @Query("SELECT * FROM categories")
     fun getCategoriesWithTodosSortedByName(): Flow<List<CategoryWithTodosEntity>>
@@ -26,4 +36,12 @@ interface CategoriesWithTodosDao {
     @Transaction
     @Query("SELECT * FROM categories")
     fun getCategoriesWithTodosSortedByDate(): Flow<List<CategoryWithTodosEntity>>
+
+    @Transaction
+    @Query("SELECT * FROM categories WHERE id = :categoryId")
+    fun getCategoryWithTodosSortedByName(categoryId: Long): Flow<CategoryWithTodosEntity>
+
+    @Transaction
+    @Query("SELECT * FROM categories WHERE id = :categoryId")
+    fun getCategoryWithTodosSortedByDate(categoryId: Long): Flow<CategoryWithTodosEntity>
 }

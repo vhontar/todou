@@ -37,6 +37,16 @@ class TodouRepository @Inject constructor(
         }
     }
 
+    // get category with todos
+    fun getCategoryWithTodos(
+        categoryId: Long,
+        searchQuery: String,
+        hideCompleted: Boolean,
+        sortOrder: SortOrder
+    ): Flow<CategoryWithTodos> {
+        return categoryWithTodosDao.getCategoryWithTodos(categoryId, sortOrder).map { it.toModel() }
+    }
+
     // CRUD category
     suspend fun createCategory(category: Category) = categoryDao.insert(category.toEntity())
     fun getCategories() = categoryDao.getCategories()

@@ -1,12 +1,12 @@
 package com.easycodingstudio.todou.ui.todou
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.easycodingstudio.todou.model.Category
 import com.easycodingstudio.todou.model.SortOrder
 import com.easycodingstudio.todou.model.Todo
 import com.easycodingstudio.todou.repository.TodouRepository
+import com.easycodingstudio.todou.ui.adapter.OnCategoryTodoItemListener
+import com.easycodingstudio.todou.ui.adapter.OnTodoItemListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -17,8 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TodouViewModel @Inject constructor(
     private val todouRepository: TodouRepository
-) : ViewModel() {
-    
+) : ViewModel(), OnTodoItemListener, OnCategoryTodoItemListener {
+
     val categoriesWithTodos = todouRepository.getCategoriesWithTodos("", true, SortOrder.SORT_BY_DATE).asLiveData()
 
     private val todouEventsChannel = Channel<TodouEvents>()
@@ -26,20 +26,28 @@ class TodouViewModel @Inject constructor(
 
     private val currentDate = DateTime.now().toLocalDateTime()
 
-    fun onCategoryWithAllTodosClicked(category: Category) = viewModelScope.launch {
-        todouEventsChannel.send(TodouEvents.NavigateToCategoryWithAllTodosPage(category))
+    override fun onCategoryWithAllTodosClicked(category: Category) {
+        viewModelScope.launch {
+            todouEventsChannel.send(TodouEvents.NavigateToCategoryWithAllTodosPage(category))
+        }
     }
 
-    fun onCategoryItemClicked(category: Category) = viewModelScope.launch {
-        todouEventsChannel.send(TodouEvents.NavigateToCategoryPage(category))
+    override fun onCategoryItemClicked(category: Category){
+        viewModelScope.launch {
+            todouEventsChannel.send(TodouEvents.NavigateToCategoryPage(category))
+        }
     }
 
-    fun onTodoItemClicked(todo: Todo) = viewModelScope.launch {
-        todouEventsChannel.send(TodouEvents.NavigateToTodoPage(todo))
+    override fun onTodoItemClicked(todo: Todo) {
+        viewModelScope.launch {
+            todouEventsChannel.send(TodouEvents.NavigateToTodoPage(todo))
+        }
     }
 
-    fun onTodoItemDoneClicked(todo: Todo) = viewModelScope.launch {
-        todouRepository.updateTodo(todo)
+    override fun onTodoItemDoneClicked(todo: Todo) {
+        viewModelScope.launch {
+            todouRepository.updateTodo(todo)
+        }
     }
 
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {

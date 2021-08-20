@@ -12,19 +12,19 @@ import com.easycodingstudio.todou.ui.todou.TodouViewModel
 
 class TodoAdapter(
     private val category: Category,
-    private val viewModel: TodouViewModel
+    private val listener: OnTodoItemListener
 ) : ListAdapter<Todo, TodoViewHolder>(TodoDiffUtilCallBack()) {
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it, category) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        TodoViewHolder.from(parent, viewModel)
+        TodoViewHolder.from(parent, listener)
 }
 
 class TodoViewHolder private constructor(
     private val binding: RecyclerviewTodoItemBinding,
-    private val viewModel: TodouViewModel
+    private val listener: OnTodoItemListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var localTodo: Todo? = null
@@ -49,22 +49,22 @@ class TodoViewHolder private constructor(
 
     private fun onTodoItemClicked() {
         localTodo?.let {
-            viewModel.onTodoItemClicked(it)
+            listener.onTodoItemClicked(it)
         }
     }
 
     private fun onTodoItemDoneClicked() {
         localTodo?.let {
             val updatedTodo = it.copy(isCompleted = !it.isCompleted)
-            viewModel.onTodoItemDoneClicked(updatedTodo)
+            listener.onTodoItemDoneClicked(updatedTodo)
         }
     }
 
     companion object {
-        fun from(parent: ViewGroup, viewModel: TodouViewModel): TodoViewHolder {
+        fun from(parent: ViewGroup, listener: OnTodoItemListener): TodoViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = RecyclerviewTodoItemBinding.inflate(layoutInflater, parent, false)
-            return TodoViewHolder(binding, viewModel)
+            return TodoViewHolder(binding, listener)
         }
     }
 }
@@ -72,4 +72,9 @@ class TodoViewHolder private constructor(
 class TodoDiffUtilCallBack : DiffUtil.ItemCallback<Todo>() {
     override fun areItemsTheSame(oldItem: Todo, newItem: Todo) = oldItem == newItem
     override fun areContentsTheSame(oldItem: Todo, newItem: Todo) = oldItem.id == newItem.id
+}
+
+interface OnTodoItemListener {
+    fun onTodoItemClicked(todo: Todo)
+    fun onTodoItemDoneClicked(todo: Todo)
 }
