@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- This will set the fade in animation on all your activities by default -->
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
     <style name="TodoTextView">
         <item name="android:textSize">@dimen/todo_text_size</item>
     </style>
@@ -14,10 +20,6 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="CategoryTitle.Big" parent="CategoryTitle">
-        <item name="android:padding">@dimen/default_padding</item>
-    </style>
-
     <style name="CategoryTitle.Small" parent="CategoryTitle">
         <item name="android:paddingStart">@dimen/default_padding</item>
         <item name="android:paddingEnd">@dimen/default_padding</item>
@@ -25,7 +27,23 @@
         <item name="android:paddingBottom">@dimen/category_title_small_padding_top_bottom</item>
     </style>
 
-    <style name="Title">
+    <style name="HomeTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:layout_marginTop">@dimen/default_margin</item>
+        <item name="android:layout_marginStart">@dimen/space_24dp</item>
+    </style>
+
+    <style name="SettingsItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">@dimen/settings_text_size</item>
+        <item name="android:layout_marginEnd">@dimen/default_margin</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:maxLines">2</item>
     </style>
 </resources>

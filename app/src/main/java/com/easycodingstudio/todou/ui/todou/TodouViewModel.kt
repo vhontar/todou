@@ -1,11 +1,9 @@
 package com.easycodingstudio.todou.ui.todou
 
 import androidx.lifecycle.*
-import com.easycodingstudio.todou.model.Category
-import com.easycodingstudio.todou.model.SortOrder
-import com.easycodingstudio.todou.model.Todo
+import com.easycodingstudio.todou.model.*
 import com.easycodingstudio.todou.repository.TodouRepository
-import com.easycodingstudio.todou.ui.adapter.OnCategoryTodoItemListener
+import com.easycodingstudio.todou.ui.adapter.OnCategoryMenuItemListener
 import com.easycodingstudio.todou.ui.adapter.OnTodoItemListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -17,24 +15,46 @@ import javax.inject.Inject
 @HiltViewModel
 class TodouViewModel @Inject constructor(
     private val todouRepository: TodouRepository
-) : ViewModel(), OnTodoItemListener, OnCategoryTodoItemListener {
+) : ViewModel(), OnTodoItemListener, OnCategoryMenuItemListener {
 
-    val categoriesWithTodos = todouRepository.getCategoriesWithTodos("", true, SortOrder.SORT_BY_DATE).asLiveData()
+    val todos = todouRepository.getAllTodos().asLiveData()
+    val categories = todouRepository.getCategories().asLiveData()
+    val selectedCategory = todouRepository.getSelectedCategory().asLiveData()
+
+    // todos
+    val todosWithHeader = MediatorLiveData<List<Holder>>()
+    val homeScreenSelected = MediatorLiveData<Boolean>()
 
     private val todouEventsChannel = Channel<TodouEvents>()
     val todouEvents = todouEventsChannel.receiveAsFlow()
 
-    private val currentDate = DateTime.now().toLocalDateTime()
+    init {
+        todosWithHeader.addSource(todos) { generateTodosWithHeadersForHomePage(selectedCategory.value, it) }
+        todosWithHeader.addSource(selectedCategory) { generateTodosWithHeadersForHomePage(it, todos.value ?: listOf()) }
 
-    override fun onCategoryWithAllTodosClicked(category: Category) {
-        viewModelScope.launch {
-            todouEventsChannel.send(TodouEvents.NavigateToCategoryWithAllTodosPage(category))
+        // calculate if home screen selected depends on categories
+        homeScreenSelected.addSource(categories) { categories ->
+            homeScreenSelected.value = categories.none { it.selected }
         }
     }
 
-    override fun onCategoryItemClicked(category: Category){
+    override fun onHomeScreenItemClicked() {
         viewModelScope.launch {
-            todouEventsChannel.send(TodouEvents.NavigateToCategoryPage(category))
+            categories.value?.let {
+                it.forEach { category -> category.selected = false }
+                todouRepository.updateAllCategories(it)
+            }
+        }
+    }
+
+    override fun onCategoryMenuItemClicked(category: Category) {
+        viewModelScope.launch {
+            val oldCategories = categories.value ?: listOf()
+            oldCategories.forEach {
+                it.selected = it.id == category.id
+            }
+            todouRepository.updateAllCategories(oldCategories)
+            todouEventsChannel.send(TodouEvents.CloseDrawerNavigation)
         }
     }
 
@@ -50,32 +70,65 @@ class TodouViewModel @Inject constructor(
         }
     }
 
-    fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
-        // save to data store
+    override fun onTodoHeaderItemClicked(type: TodoHeaderType) {
+        // create todos for current date
     }
 
-    fun onHideCompletedClicked(isHidden: Boolean) = viewModelScope.launch {
-        // save to data store
+    // TODO get from datastore
+    fun isDarkModeEnabled() = true
+
+    // TODO refactor filter
+    private fun generateTodosWithHeadersForHomePage(
+        category: Category?,
+        todos: List<Todo>
+    ) {
+        val finalList = arrayListOf<Holder>()
+        // today
+        val today = DateTime.now()
+        val todayTodos = if (category == null) {
+            todos.filter { todo -> todo.todoDate?.dayOfMonth == today.dayOfMonth }
+                .map { TodoWithCategory(getCategoryById(it.categoryId), it) }
+        } else {
+            todos.filter { todo -> todo.categoryId == category.id && todo.todoDate?.dayOfMonth == today.dayOfMonth }
+                .map { TodoWithCategory(category, it) }
+        }
+        finalList.add(TodoHeader( TodoHeaderType.TODAY, todayTodos.size, 0))
+        finalList.addAll(todayTodos)
+        // tomorrow
+        val tomorrow = DateTime.now().plusDays(1)
+        val tomorrowTodos = if (category == null) {
+            todos.filter { todo -> todo.todoDate?.dayOfMonth == tomorrow.dayOfMonth }
+                .map { TodoWithCategory(getCategoryById(it.categoryId), it) }
+        } else {
+            todos.filter { todo -> todo.categoryId == category.id && todo.todoDate?.dayOfMonth == tomorrow.dayOfMonth }
+                .map { TodoWithCategory(category, it) }
+        }
+        finalList.add(TodoHeader(TodoHeaderType.TOMORROW, tomorrowTodos.size, 0))
+        finalList.addAll(tomorrowTodos)
+        // later
+        val laterTodos = if (category == null) {
+            todos.filter { todo -> todo.todoDate == null || (todo.todoDate?.isAfterNow == true && todo.todoDate?.dayOfMonth != today.dayOfMonth && todo.todoDate?.dayOfMonth != tomorrow.dayOfMonth) }
+                .map { TodoWithCategory(getCategoryById(it.categoryId), it) }
+        } else {
+            todos.filter { todo -> todo.categoryId == category.id && (todo.todoDate == null || (todo.todoDate?.isAfterNow == true && todo.todoDate?.dayOfMonth != today.dayOfMonth && todo.todoDate?.dayOfMonth != tomorrow.dayOfMonth)) }
+                .map { TodoWithCategory(category, it) }
+        }
+        finalList.add(TodoHeader(TodoHeaderType.LATER, laterTodos.size, 0))
+        finalList.addAll(laterTodos)
+
+        // TODO filter by importance
+
+        todosWithHeader.value = finalList
     }
 
-    fun onDeleteAllCompletedClicked() = viewModelScope.launch {
-        // show confirmation dialog
+    private fun getCategoryById(id: Long): Category {
+        return categories.value?.filter { it.id == id }?.get(0) ?: Category()
     }
-
-    fun onArchiveClicked() = viewModelScope.launch {
-        todouEventsChannel.send(TodouEvents.NavigateToArchivePage)
-    }
-
-    fun getDay() = currentDate.dayOfMonth.toString()
-    fun getMonth() = currentDate.toString("MMM")
-    fun getYear() = currentDate.year.toString()
-    // TODO change always + 0 minutes should be 00 and so on
-    fun getTime(): String = "${currentDate.hourOfDay}:${currentDate.minuteOfHour}"
 
     sealed class TodouEvents {
         class NavigateToCategoryWithAllTodosPage(val category: Category) : TodouEvents()
         class NavigateToCategoryPage(val category: Category) : TodouEvents()
         class NavigateToTodoPage(val todo: Todo) : TodouEvents()
-        object NavigateToArchivePage: TodouEvents()
+        object CloseDrawerNavigation : TodouEvents()
     }
 }

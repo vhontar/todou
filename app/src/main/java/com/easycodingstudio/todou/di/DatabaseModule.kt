@@ -32,9 +32,6 @@ object DatabaseModule {
     @Provides // don't need to be a singleton because room already returns the same instance
     fun provideCategoryDao(todouDatabase: TodouDatabase) = todouDatabase.getCategoryDao()
 
-    @Provides // don't need to be a singleton because room already returns the same instance
-    fun provideCategoryWithTodosDao(todouDatabase: TodouDatabase) = todouDatabase.getCategoriesWithTodosDao()
-
     @ApplicationScope
     @Singleton
     @Provides

@@ -7,12 +7,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.easycodingstudio.todou.databinding.RecyclerviewArchiveDateItemBinding
 import com.easycodingstudio.todou.databinding.RecyclerviewArchiveTodoItemBinding
+import com.easycodingstudio.todou.model.DateWithTodos
 import com.easycodingstudio.todou.model.Todo
 import com.easycodingstudio.todou.ui.archive.ArchiveViewModel
 
 class ArchiveAdapter(
     private val viewModel: ArchiveViewModel
-): ListAdapter<CompletedTodoHolder, RecyclerView.ViewHolder>(CompletedTodoDiffUtilCallback()) {
+): ListAdapter<DateWithTodos, RecyclerView.ViewHolder>(CompletedTodoDiffUtilCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         TODO("Not yet implemented")
     }
@@ -56,10 +57,8 @@ class ArchiveTodoViewHolder(
 
 }
 
-class CompletedTodoDiffUtilCallback: DiffUtil.ItemCallback<CompletedTodoHolder>() {
-    override fun areContentsTheSame(oldItem: CompletedTodoHolder, newItem: CompletedTodoHolder) = oldItem == newItem
-    override fun areItemsTheSame(oldItem: CompletedTodoHolder, newItem: CompletedTodoHolder) =
-        oldItem.uniqueId == newItem.uniqueId
+class CompletedTodoDiffUtilCallback: DiffUtil.ItemCallback<DateWithTodos>() {
+    override fun areContentsTheSame(oldItem: DateWithTodos, newItem: DateWithTodos) = oldItem == newItem
+    override fun areItemsTheSame(oldItem: DateWithTodos, newItem: DateWithTodos) =
+        oldItem.date == newItem.date
 }
-
-data class CompletedTodoHolder(val uniqueId: Long)

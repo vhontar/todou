@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+                name="viewmodel"
+                type="com.easycodingstudio.todou.ui.categoryselection.CategorySelectioViewModel"/>
+    </data>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_padding">
+
+        <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/tvSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/search_title_menu"
+                android:text="@={viewmodel.searchRequest}"
+                app:backgroundTint="@color/hamburger_menu_color_light_mode"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvSearch"/>
+
+    </RelativeLayout>
+</layout>

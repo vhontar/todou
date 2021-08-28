@@ -3,16 +3,44 @@
 
     <string name="search_title_menu">Search</string>
     <string name="filter_title_menu">Filter</string>
-    <string name="filter_by_date_title_menu">Filter by date</string>
-    <string name="filter_by_name_title_menu">Filter by name</string>
-    <string name="hide_completed_title_menu">Hide completed</string>
-    <string name="delete_all_completed_title_menu">Delete all completed</string>
+
+    <plurals name="today">
+        <item quantity="zero">Today</item>
+        <item quantity="other">Today (%1$d)</item>
+    </plurals>
+    <plurals name="tomorrow">
+        <item quantity="zero">Tomorrow</item>
+        <item quantity="other">Tomorrow (%1$d)</item>
+    </plurals>
+    <plurals name="later">
+        <item quantity="zero">Later</item>
+        <item quantity="other">Later (%1$d)</item>
+    </plurals>
+    <string name="today">Today (%1$d)</string>
+    <string name="tomorrow">Tomorrow (%1$d)</string>
+    <string name="later">Later (%1$d)</string>
+
+    <!-- Bottom navigation -->
+    <string name="home_menu">Home screen</string>
+    <string name="archive_menu">Archive</string>
+    <string name="settings_menu">Settings</string>
+    <string name="todo_lists">Todo lists</string>
 
     <!-- Category -->
     <string name="category_new">New category</string>
     <string name="category_name_empty">Category name cannot be empty.</string>
+    <string name="all">All</string>
+
+    <!-- create todos -->
+    <string name="todo_hint">e.g. Meet with friend</string>
 
     <!-- Archive -->
     <string name="archive">Archive</string>
-    <string name="archive_underlinde"><![CDATA[<u>Archive</u>]]></string>
+
+    <!-- Settings -->
+    <string name="settings_dark_mode">Dark mode</string>
+    <string name="settings_filter_todos_by_name">Filter todos by name</string>
+    <string name="settings_filter_todos_by_date">Filter todos by creation date</string>
+    <string name="settings_hide_completed">Hide completed todos</string>
+    <string name="settings_delete_all_completed"><![CDATA[<u>Delete all completed todos from archive</u>]]></string>
 </resources>

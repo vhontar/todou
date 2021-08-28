@@ -7,11 +7,11 @@
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/default_margin">
+                android:padding="@dimen/default_padding">
 
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvArchiveTitle"
-                    style="@style/Title"
+                    style="@style/HomeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/archive"/>

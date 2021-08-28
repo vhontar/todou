@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="default_padding">16dp</dimen>
+    <dimen name="small_padding">8dp</dimen>
     <dimen name="default_margin">16dp</dimen>
+    <dimen name="default_margin_2x">32dp</dimen>
     <dimen name="default_text_size">14sp</dimen>
+    <dimen name="space_24dp">24dp</dimen>
 
     <!-- todos -->
     <dimen name="todo_text_size">16sp</dimen>
@@ -14,7 +17,10 @@
     <dimen name="category_card_todos_margin_top">30dp</dimen>
     <dimen name="category_title_radius">10dp</dimen>
     <dimen name="category_title_small_padding_top_bottom">8dp</dimen>
+    <dimen name="category_filter_corners">32dp</dimen>
 
     <!-- Other -->
     <dimen name="vertical_divider">10dp</dimen>
+    <dimen name="settings_text_size">16sp</dimen>
+    <dimen name="home_todo_list_margin_top">10dp</dimen>
 </resources>

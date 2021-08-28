@@ -10,7 +10,10 @@
             android:roundIcon="@drawable/ic_compliant"
             android:supportsRtl="true"
             android:theme="@style/Theme.Todou">
-        <activity android:name="com.easycodingstudio.todou.ui.TodouActivity">
+        <activity
+                android:name="com.easycodingstudio.todou.ui.TodouActivity"
+                android:windowSoftInputMode="adjustPan|adjustResize"
+                android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

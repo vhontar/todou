@@ -3,16 +3,28 @@
 
     <string name="search_title_menu">Поиск</string>
     <string name="filter_title_menu">Фильтр</string>
-    <string name="filter_by_date_title_menu">Фильтровать по дате</string>
-    <string name="filter_by_name_title_menu">Фильтровать по имени</string>
-    <string name="hide_completed_title_menu">Скрыть сделанные</string>
-    <string name="delete_all_completed_title_menu">Удалить все сделанные</string>
+
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="later">Позже</string>
+
+    <!-- Bottom navigation -->
+    <string name="home_menu">Дом</string>
+    <string name="archive_menu">Архив</string>
+    <string name="settings_menu">Настройки</string>
 
     <!-- Category -->
     <string name="category_new">Новая категория</string>
     <string name="category_name_empty">Категория не может быть без имени.</string>
+    <string name="all">Все</string>
 
     <!-- Archive -->
     <string name="archive">Архив</string>
-    <string name="archive_underlinde"><![CDATA[<u>Архив</u>]]></string>
+
+    <!-- Settings -->
+    <string name="settings_dark_mode">Темная тема</string>
+    <string name="settings_filter_todos_by_name">Фильтровать по имени</string>
+    <string name="settings_filter_todos_by_date">Фильтровать по дате создания</string>
+    <string name="settings_hide_completed">Скрыть выполненные задачи</string>
+    <string name="settings_delete_all_completed"><![CDATA[<u>Удалить все выполненные задачи из архива</u>]]></string>
 </resources>

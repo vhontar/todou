@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="androidx.core.text.HtmlCompat"/>
+
+        <variable
+                name="viewmodel"
+                type="com.easycodingstudio.todou.ui.settings.SettingsViewModel"/>
+    </data>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <RelativeLayout
+                android:id="@+id/rlDarkMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_padding"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding">
+
+            <TextView
+                    style="@style/SettingsItem"
+                    android:layout_toStartOf="@id/swcDarkMode"
+                    android:text="@string/settings_dark_mode"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/swcDarkMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:checked="@{viewmodel.settingsDarkMode}"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.5dp"
+                  android:background="@color/light_grey"
+                  android:layout_below="@id/swcDarkMode"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/rlFilterTodosByDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_padding"
+                android:layout_below="@id/rlDarkMode"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding">
+
+            <TextView
+                    style="@style/SettingsItem"
+                    android:layout_toStartOf="@id/swcFilterTodosByDate"
+                    android:text="@string/settings_filter_todos_by_date"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/swcFilterTodosByDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:checked="@{viewmodel.settingsFilterTodosByDate}"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.5dp"
+                  android:background="@color/light_grey"
+                  android:layout_below="@id/swcFilterTodosByDate"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/rlFilterTodosByName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rlFilterTodosByDate"
+                android:paddingTop="@dimen/default_padding"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding">
+
+            <TextView
+                    style="@style/SettingsItem"
+                    android:layout_toStartOf="@id/swcFilterTodosByName"
+                    android:text="@string/settings_filter_todos_by_name"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/swcFilterTodosByName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:checked="@{viewmodel.settingsFilterTodosByName}"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.5dp"
+                  android:background="@color/light_grey"
+                  android:layout_below="@id/swcFilterTodosByName"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/rlHideCompletedTodos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_padding"
+                android:layout_below="@id/rlFilterTodosByName"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding">
+
+            <TextView
+                    style="@style/SettingsItem"
+                    android:layout_toStartOf="@id/swcHideCompletedTodos"
+                    android:text="@string/settings_hide_completed"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/swcHideCompletedTodos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:checked="@{viewmodel.settingsHideCompletedTodos}"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="0.5dp"
+                  android:background="@color/light_grey"
+                  android:layout_below="@id/swcHideCompletedTodos"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/rlDeleteCompletedTodos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rlHideCompletedTodos"
+                android:padding="@dimen/default_padding">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{HtmlCompat.fromHtml(@string/settings_delete_all_completed, HtmlCompat.FROM_HTML_MODE_COMPACT)}"
+                    android:textSize="12sp"
+                    android:textColor="@color/red"
+                    tools:text="@string/settings_delete_all_completed"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

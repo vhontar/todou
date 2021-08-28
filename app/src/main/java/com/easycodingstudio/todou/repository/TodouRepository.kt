@@ -1,64 +1,36 @@
 package com.easycodingstudio.todou.repository
 
 import com.easycodingstudio.todou.data.database.dao.CategoryDao
-import com.easycodingstudio.todou.data.database.dao.CategoriesWithTodosDao
 import com.easycodingstudio.todou.data.database.dao.TodoDao
 import com.easycodingstudio.todou.data.database.entities.toModel
 import com.easycodingstudio.todou.data.database.entities.toModels
-import com.easycodingstudio.todou.model.*
+import com.easycodingstudio.todou.model.Category
+import com.easycodingstudio.todou.model.Todo
+import com.easycodingstudio.todou.model.toEntities
+import com.easycodingstudio.todou.model.toEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class TodouRepository @Inject constructor(
     private val todoDao: TodoDao,
-    private val categoryDao: CategoryDao,
-    private val categoryWithTodosDao: CategoriesWithTodosDao
+    private val categoryDao: CategoryDao
 ) {
-    // get category with todos
-    fun getCategoriesWithTodos(
-        searchQuery: String,
-        hideCompleted: Boolean,
-        sortOrder: SortOrder
-    ): Flow<List<CategoryWithTodos>> {
-        return categoryWithTodosDao.getCategoriesWithTodos(sortOrder).map {
-            it.filter { category ->
-                category.todosEntities.filter { todo ->
-                    if (searchQuery.isNotEmpty() && hideCompleted) {
-                        todo.task.lowercase(Locale.US).contains(searchQuery.lowercase(Locale.US)) && !todo.isCompleted
-                    } else if (hideCompleted) {
-                        !todo.isCompleted
-                    } else true
-                }; true
-            }.toModels()
-        }
-    }
-
-    // get category with todos
-    fun getCategoryWithTodos(
-        categoryId: Long,
-        searchQuery: String,
-        hideCompleted: Boolean,
-        sortOrder: SortOrder
-    ): Flow<CategoryWithTodos> {
-        return categoryWithTodosDao.getCategoryWithTodos(categoryId, sortOrder).map { it.toModel() }
-    }
-
     // CRUD category
-    suspend fun createCategory(category: Category) = categoryDao.insert(category.toEntity())
-    fun getCategories() = categoryDao.getCategories()
+    fun getCategories() = categoryDao.getCategories().map { it.toModels() }
     fun getCategory(categoryId: Long) = categoryDao.getCategory(categoryId).map { it.toModel() }
+    fun getSelectedCategory() = categoryDao.getSelectedCategory().map { it?.toModel() }
+    suspend fun createCategory(category: Category) = categoryDao.insert(category.toEntity())
     suspend fun updateCategory(category: Category) = categoryDao.update(category.toEntity())
+    suspend fun updateAllCategories(categories: List<Category>) = categoryDao.updateAll(categories.toEntities())
     suspend fun deleteCategory(category: Category) = categoryDao.delete(category.toEntity())
 
     // CRUD todos
-    suspend fun createTodo(todo: Todo, category: Category) =
-        todoDao.insert(todo.copy(categoryId = category.id).toEntity())
+    fun getAllTodos(): Flow<List<Todo>> = todoDao.getAllTodos().map { it.toModels() }
 
-    fun getTodosForCategory(category: Category) = todoDao.getTodosForCategory(category.id)
+    suspend fun createTodo(todo: Todo) = todoDao.insert(todo.toEntity())
     suspend fun updateTodo(todo: Todo) = todoDao.update(todo.toEntity())
     suspend fun deleteTodo(todo: Todo) = todoDao.delete(todo.toEntity())
 }

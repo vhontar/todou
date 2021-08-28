@@ -9,29 +9,20 @@
           app:actionViewClass="androidx.appcompat.widget.SearchView"
           tools:ignore="AlwaysShowAction"/>
 
-    <item
-          android:icon="@drawable/ic_filter"
-          android:title="@string/filter_title_menu"
-          app:showAsAction="always">
+<!--    <item-->
+<!--          android:icon="@drawable/ic_filter"-->
+<!--          android:title="@string/filter_title_menu"-->
+<!--          app:showAsAction="always">-->
 
-        <menu>
-            <item android:id="@+id/action_filter_by_date"
-                  android:title="@string/filter_by_date_title_menu"
-                  app:showAsAction="never"/>
+<!--        <menu>-->
+<!--            <item android:id="@+id/action_filter_by_date"-->
+<!--                  android:title="@string/filter_by_date_title_menu"-->
+<!--                  app:showAsAction="never"/>-->
 
-            <item android:id="@+id/action_filter_by_name"
-                  android:title="@string/filter_by_name_title_menu"
-                  app:showAsAction="never"/>
-        </menu>
-    </item>
-
-    <item android:id="@+id/action_hide_completed"
-          android:title="@string/hide_completed_title_menu"
-          android:checkable="true"
-          app:showAsAction="never"/>
-
-    <item android:id="@+id/action_delete_all_completed"
-          android:title="@string/delete_all_completed_title_menu"
-          app:showAsAction="never"/>
+<!--            <item android:id="@+id/action_filter_by_name"-->
+<!--                  android:title="@string/filter_by_name_title_menu"-->
+<!--                  app:showAsAction="never"/>-->
+<!--        </menu>-->
+<!--    </item>-->
 
 </menu>

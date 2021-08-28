@@ -10,7 +10,10 @@ data class Category(
     val id: Long = 0,
     var name: String = "",
     var color: Int = R.color.category_color_1,
+    var selected: Boolean = false,
+    var cannotBeRemoved: Boolean = false,
     val order: Int = 0
 ): Parcelable
 
-fun Category.toEntity() = CategoryEntity(id, name, color, order)
+fun Category.toEntity() = CategoryEntity(id, name, color, selected, cannotBeRemoved, order)
+fun List<Category>.toEntities() = map { it.toEntity() }

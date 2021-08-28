@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+                name="viewmodel"
+                type="com.easycodingstudio.todou.ui.todou.TodouViewModel"/>
+    </data>
+
+    <RelativeLayout
+            android:id="@+id/drawer"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:padding="10dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSettings"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginStart="12dp"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/ic_settings"
+                app:tint="@color/menu_icon_color"/>
+
+        <LinearLayout
+                android:id="@+id/rlHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_margin"
+                android:background="@{viewmodel.homeScreenSelected ? (viewmodel.darkModeEnabled ? @drawable/drawer_menu_category_selected_dark_mode : @drawable/drawer_menu_category_selected_light_mode) : @drawable/drawer_menu_category_not_selected}"
+                android:layout_below="@id/ivSettings"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_dots_menu"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textAppearance="@font/urbanist_semibold"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:text="@string/home_menu"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/rlArchive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_padding"
+                android:layout_below="@id/rlHome"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_bookmark"
+                    app:tint="@color/menu_icon_color"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textAppearance="@font/urbanist_semibold"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:text="@string/archive_menu"/>
+        </LinearLayout>
+
+        <RelativeLayout
+                android:id="@+id/rlCategoryListHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rlArchive"
+                android:layout_marginTop="@dimen/default_margin">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:text="@string/todo_lists"
+                    android:layout_marginStart="12dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textAppearance="@font/urbanist_semibold"
+                    android:textColor="@color/menu_icon_color"
+                    android:textAllCaps="true"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivAddCategory"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_plus"
+                    app:tint="@color/menu_icon_color"/>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_below="@id/rlCategoryListHeader"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+    </RelativeLayout>
+</layout>

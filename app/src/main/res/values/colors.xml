@@ -12,6 +12,25 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="light_grey">#e6e6e6</color>
+    <color name="red">#dd3440</color>
+
+    <!-- drawer menu -->
+    <color name="menu_icon_color">#6A6D7B</color>
+    <color name="menu_item_color">#CAC9CF</color>
+    <!-- drawer menu dark mode -->
+    <color name="drawer_menu_category_selected_dark_mode">#212E39</color>
+    <!-- drawer menu light mode -->
+    <color name="drawer_menu_category_selected_light_mode">#ECF7FF</color>
+    <color name="hamburger_menu_color_light_mode">#CDCBD1</color>
+
+
+    <color name="today">#44BFFF</color>
+    <color name="tomorrow">#4370E0</color>
+    <color name="later">#646878</color>
+
+    <color name="category_filter_selected">#7DABF5</color>
+    <color name="category_filter_not_selected">#bdd4f9</color>
 
     <!-- categories color -->
     <color name="category_color_1">#7952B3</color>
@@ -32,4 +51,9 @@
     <color name="category_color_16">#f1c40f</color>
     <color name="category_color_17">#c0392b</color>
     <color name="category_color_18">#7f8c8d</color>
+
+    <!-- todos color -->
+    <color name="todo_bottom_menu_icon_not_selected">#C6C7D1</color>
+    <color name="todo_bottom_menu_icon_selected">#3DBEFF</color>
+
 </resources>

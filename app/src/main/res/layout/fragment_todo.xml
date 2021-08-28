@@ -1,9 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+                name="viewmodel"
+                type="com.easycodingstudio.todou.ui.todo.TodoViewModel"/>
+    </data>
+
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.todo.TodoFragment">
+
+        <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/todo_hint"
+                android:layout_margin="@dimen/default_margin"
+                android:text="@={viewmodel.newTodo.task}"
+                app:backgroundTint="@color/hamburger_menu_color_light_mode"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/rlBottomMenu"
+                android:layout_margin="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:textColor="@color/white"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:onClick="@{() -> viewmodel.onCategorySelectionClicked()}"
+                android:text="@{viewmodel.category.name}"
+                app:categoryBackground="@{viewmodel.category.color}"
+                tools:background="@drawable/category_background_1_selected"
+                tools:text="Home"/>
+
+        <View android:layout_width="match_parent"
+              android:layout_height="0.5dp"
+              android:background="@color/hamburger_menu_color_light_mode"
+              android:layout_above="@id/rlBottomMenu"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rlBottomMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_padding"
+                android:layout_alignParentBottom="true">
+
+            <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.1"/>
+
+            <RelativeLayout
+                    android:id="@+id/rlCalendarMenuItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewmodel.onCalendarMenuItemClicked()}"
+                    app:layout_constraintEnd_toStartOf="@id/guideline1"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_calendar"
+                        app:colorTint="@{viewmodel.newTodo.todoDate == null ? @color/todo_bottom_menu_icon_not_selected : @color/todo_bottom_menu_icon_selected}"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSelectedDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/todo_bottom_menu_icon_selected"
+                        android:text="@{viewmodel.newTodo.todoDate.dayOfMonth + ``}"
+                        android:textSize="12sp"
+                        tools:text="30"/>
+
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.37"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivBellMenuItem"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_ring"
+                    android:onClick="@{() -> viewmodel.onBellMenuItemClicked()}"
+                    app:colorTint="@{viewmodel.newTodo.notificationId != null ? @color/todo_bottom_menu_icon_selected : @color/todo_bottom_menu_icon_not_selected}"
+                    app:layout_constraintEnd_toStartOf="@id/guideline2"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.63"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivImportanceMenuItem"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:onClick="@{() -> viewmodel.onImportanceMenuItemClicked()}"
+                    android:src="@{viewmodel.newTodo.todoImportant ? @drawable/ic_caution : @drawable/ic_caution_not_active}"
+                    app:layout_constraintEnd_toStartOf="@id/guideline3"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.95"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDoneMenuItem"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_done"
+                    android:onClick="@{() -> viewmodel.onDoneMenuItemClicked()}"
+                    app:tint="@color/todo_bottom_menu_icon_selected"
+                    app:layout_constraintEnd_toStartOf="@id/guideline4"
+                    app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
 </layout>

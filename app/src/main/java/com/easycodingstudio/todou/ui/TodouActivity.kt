@@ -1,11 +1,11 @@
 package com.easycodingstudio.todou.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.easycodingstudio.todou.R
@@ -21,6 +21,15 @@ class TodouActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_todou)
+        viewDataBinding.apply {
+//            ivMenu.setOnClickListener {
+//                if (drawer.isDrawerOpen(GravityCompat.START)) {
+//                    drawer.closeDrawer(GravityCompat.START)
+//                } else {
+//                    drawer.openDrawer(GravityCompat.START)
+//                }
+//            }
+        }
 
         // setup action bar for consecutive fragments to add a navigating back button
         // have no idea why it's not working that way
@@ -30,8 +39,19 @@ class TodouActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         setupActionBarWithNavController(navController)
 
-        // TODO for testing purpose
-        setDefaultNightMode(MODE_NIGHT_NO)
+        // hide action bar
+        supportActionBar?.hide()
+
+        // turn on dark mode
+        setDefaultNightMode(MODE_NIGHT_YES)
+//        viewModel.settingsDarkMode.observe(this) {
+//            if (it) setDefaultNightMode(MODE_NIGHT_YES)
+//            else setDefaultNightMode(MODE_NIGHT_NO)
+//            finish()
+//            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//            startActivity(intent)
+//            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//        }
     }
 
     override fun onSupportNavigateUp() =
