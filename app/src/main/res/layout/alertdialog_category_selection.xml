@@ -5,7 +5,7 @@
     <data>
         <variable
                 name="viewmodel"
-                type="com.easycodingstudio.todou.ui.categoryselection.CategorySelectioViewModel"/>
+                type="com.easycodingstudio.todou.ui.dialog.categoryselection.CategorySelectioViewModel"/>
     </data>
     <RelativeLayout
             android:layout_width="match_parent"
